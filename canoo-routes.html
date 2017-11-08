@@ -4,7 +4,9 @@
 <dom-module id="canoo-routes">
 
   <script>
-    class CanooRoutes extends Polymer.Element {
+    class CanooRoutes extends Polymer.mixinBehaviors(
+      [Polymer.IronSelectableBehavior], Polymer.Element) {
+
       static get is() {
         return "canoo-routes"
       }

@@ -6,8 +6,7 @@
     "index.html"
   ],
   "extraDependencies": [
-    "analysis.json",
-    "LICENSE"
+    "LICENSE.txt"
   ],
   "builds": [
     {

@@ -13,10 +13,14 @@
 
 <test-fixture id="SimpleRoutes">
   <template>
-    <canoo-routes>
-      <canoo-route></canoo-route>
-      <canoo-route></canoo-route>
-    </canoo-routes>
+    <dom-bind>
+      <template>
+        <canoo-routes id="routes" attr-for-selected="name" selected="{{routeName}}">
+          <canoo-route name="foo"></canoo-route>
+          <canoo-route name="bar"></canoo-route>
+        </canoo-routes>
+      </template>
+    </dom-bind>
   </template>
 </test-fixture>
 
@@ -32,13 +36,27 @@
     //----------------------------------------------------------------------------------------------
 
     suite("simple routes", () => {
-      test("has local name", done => {
+      let routes
+
+      setup(() => {
         // given:
-        const routes = fixture("SimpleRoutes")
+        routes = fixture("SimpleRoutes")
+      })
+
+      test("has local name", done => {
+        flush(() => {
+          // expect:
+          expect(routes.$.routes.localName).to.eql("canoo-routes")
+          done()
+        })
+      })
+
+      test("can select route", done => {
+        routes.$.routes.select("bar")
 
         flush(() => {
           // expect:
-          expect(routes.localName).to.eql("canoo-routes")
+          expect(routes.routeName).to.eql("bar")
           done()
         })
       })
