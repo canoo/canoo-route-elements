@@ -12,7 +12,30 @@
       }
 
       static get properties() {
-        return {}
+        return {
+          route: {
+            type: String
+          }
+        }
+      }
+
+      ready() {
+        super.ready()
+        this.addEventListener("iron-items-changed", this._onItemsChanged)
+      }
+
+      _onItemsChanged() {
+        for (const itemIndex in this.items) {
+          const routeItem = this.items[itemIndex]
+          if (this._matchRoute(routeItem)) {
+            this.selectIndex(itemIndex)
+            break
+          }
+        }
+      }
+
+      _matchRoute(routeItem) {
+        return routeItem.getAttribute(this.attrForSelected) === this.route
       }
     }
 
