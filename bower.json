@@ -25,15 +25,9 @@
   "devDependencies": {
     "iron-component-page": "3.0.1",
     "web-component-tester": "6.4.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#1.0.17",
-    "mocha": "3.5.3",
-    "chai": "4.1.2",
-    "sinon": "4.0.1",
-    "lodash": "4.17.4"
+    "webcomponentsjs": "webcomponents/webcomponentsjs#1.0.17"
   },
   "resolutions": {
-    "polymer": "2.2.0",
-    "chai": "4.1.2",
-    "lodash": "4.17.4"
+    "polymer": "2.2.0"
   }
 }
