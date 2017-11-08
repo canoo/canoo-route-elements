@@ -1,0 +1,48 @@
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- IMPORTS.
+<!-- ------------------------------------------------------------------------------------------ -->
+
+<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+<script src="../../web-component-tester/browser.js"></script>
+<link rel="import" href="../canoo-route.html">
+<link rel="import" href="../canoo-routes.html">
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- FIXTURES.
+<!-- ------------------------------------------------------------------------------------------ -->
+
+<test-fixture id="SimpleRoutes">
+  <template>
+    <canoo-routes>
+      <canoo-route></canoo-route>
+      <canoo-route></canoo-route>
+    </canoo-routes>
+  </template>
+</test-fixture>
+
+<!-- ------------------------------------------------------------------------------------------ -->
+<!-- FEATURES.
+<!-- ------------------------------------------------------------------------------------------ -->
+
+<script>
+  suite("<canoo-routes>", () => {
+
+    //----------------------------------------------------------------------------------------------
+    // SUITE.
+    //----------------------------------------------------------------------------------------------
+
+    suite("simple routes", () => {
+      test("has local name", done => {
+        // given:
+        const routes = fixture("SimpleRoutes")
+
+        flush(() => {
+          // expect:
+          expect(routes.localName).to.eql("canoo-routes")
+          done()
+        })
+      })
+    })
+
+  })
+</script>

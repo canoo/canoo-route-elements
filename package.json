@@ -1,0 +1,34 @@
+{
+  "name": "canoo-route-elements",
+  "description": "Declarative, self-describing routing",
+  "version": "0.1.0",
+  "author": "Benjamin Gudehus <benjamin.gudehus@canoo.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hastebrot/canoo-route-elements.git"
+  },
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "browser": "npm run serve & npm run watch",
+    "build": "./node_modules/.bin/polymer build",
+    "lint": "npm run lint:polymer",
+    "lint:js": "./node_modules/.bin/eslint . --ext js,html --ignore-path .gitignore",
+    "lint:polymer": "./node_modules/.bin/polymer lint",
+    "serve": "./node_modules/.bin/polymer serve --port 9090",
+    "test": "./node_modules/.bin/polymer test --local chrome,firefox",
+    "watch": "./node_modules/.bin/browser-sync start --port 3000 --proxy 'localhost:9090' --no-ui --files '*.html, demo/*.html, test/*.html' --startPath '/components/canoo-route-elements'"
+  },
+  "devDependencies": {
+    "bower": "1.8.2",
+    "browser-sync": "2.18.13",
+    "eslint": "4.10.0",
+    "eslint-config-standard": "10.2.1",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-node": "5.2.1",
+    "eslint-plugin-promise": "3.6.0",
+    "eslint-plugin-standard": "3.0.1",
+    "polymer-cli": "1.5.7",
+    "web-component-tester": "6.4.0"
+  }
+}

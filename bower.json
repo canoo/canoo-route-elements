@@ -1,0 +1,39 @@
+{
+  "name": "canoo-route-elements",
+  "description": "Declarative, self-describing routing",
+  "version": "0.1.0",
+  "authors": [
+    "Benjamin Gudehus <benjamin.gudehus@canoo.com>"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  ],
+  "ignore": [
+    "**/.*",
+    "demo",
+    "test",
+    "package.json",
+    "package-lock.json"
+  ],
+  "dependencies": {
+    "polymer": "2.2.0",
+    "iron-selector": "PolymerElements/iron-selector#2.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "3.0.1",
+    "web-component-tester": "6.4.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#1.0.17",
+    "mocha": "3.5.3",
+    "chai": "4.1.2",
+    "sinon": "4.0.1",
+    "lodash": "4.17.4"
+  },
+  "resolutions": {
+    "polymer": "2.2.0",
+    "chai": "4.1.2",
+    "lodash": "4.17.4"
+  }
+}

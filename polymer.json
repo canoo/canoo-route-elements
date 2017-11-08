@@ -1,0 +1,38 @@
+{
+  "entrypoint": "index.html",
+  "sources": [
+    "canoo-route.html",
+    "canoo-routes.html",
+    "index.html"
+  ],
+  "extraDependencies": [
+    "analysis.json",
+    "LICENSE"
+  ],
+  "builds": [
+    {
+      "preset": "es5-bundled",
+      "addServiceWorker": false,
+      "addPushManifest": false,
+      "js": {
+        "minify": false,
+        "compile": true
+      },
+      "css": {
+        "minify": false
+      },
+      "html": {
+        "minify": false
+      },
+      "bundle": {
+        "stripComments": true
+      }
+    }
+  ],
+  "lint": {
+    "rules": [
+      "polymer-2"
+    ],
+    "ignoreWarnings": []
+  }
+}
