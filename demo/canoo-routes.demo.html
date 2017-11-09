@@ -9,12 +9,6 @@
 
 <dom-bind>
   <template>
-    <div>
-      <a href="#/foo">foo</a>
-      <a href="#/bar">bar</a>
-      <a href="#/baz/quux">baz</a>
-    </div>
-
     <app-location route="{{route}}" use-hash-as-path></app-location>
 
     <canoo-routes
@@ -26,6 +20,14 @@
       <canoo-route name="bar" regexp pattern="/bar"></canoo-route>
       <canoo-route name="baz" regexp pattern="/baz/(.+)"></canoo-route>
     </canoo-routes>
+
+    <div>
+      <a href="#/foo">foo</a>
+      <a href="#/bar">bar</a>
+      <a href="#/baz/quux?key=val">baz</a>
+    </div>
+
+    <br>
 
     <iron-pages
         attr-for-selected="name"
@@ -40,11 +42,16 @@
   <script>
 
     document.addEventListener("WebComponentsReady", () => {
+      const location = document.querySelector("app-location")
       const routes = document.querySelector("canoo-routes")
-      console.log(routes)
 
-      routes.addEventListener("route-changed", () => {
-        console.log(routes)
+      location.addEventListener("route-changed", () => {
+        console.log("location", location.route)
+      })
+
+      routes.addEventListener("selected-changed", () => {
+        console.log("routes.selected", routes.selected)
+        console.log("routes.route", routes.route)
       })
     })
 

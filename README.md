@@ -1,11 +1,22 @@
 # canoo-route-elements
 
 [![Travis Build](https://img.shields.io/travis/canoo/canoo-route-elements.svg)](https://travis-ci.org/canoo/canoo-route-elements)
-[![Polymer 2](https://img.shields.io/badge/webcomponents-Polymer%202-orange.svg?style=flat)](https://www.polymer-project.org/2.0/start/)
 [![MIT License](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
+[![Polymer 2](https://img.shields.io/badge/webcomponents-Polymer%202-orange.svg?style=flat)](https://www.polymer-project.org/2.0/start/)
 [![Canoo Incubator](https://img.shields.io/badge/canoo-incubator-be1432.svg?style=flat)](https://github.com/canoo)
 
+~~~
+$ bower install --save canoo/canoo-route-elements
+$ bower install --save PolymerElements/app-location
+$ bower install --save PolymerElements/iron-pages
+~~~
+
 ~~~html
+<link rel="import" href="../app-route/app-location.html">
+<link rel="import" href="../canoo-route-elements/canoo-route.html">
+<link rel="import" href="../canoo-route-elements/canoo-routes.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
+
 <app-location route="{{route}}" use-hash-as-path></app-location>
 
 <canoo-routes
@@ -26,6 +37,8 @@
   <div name="baz">baz</div>
 </iron-pages>
 ~~~
+
+## Usage
 
 Simple routes.
 
