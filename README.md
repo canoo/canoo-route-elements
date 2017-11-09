@@ -5,6 +5,28 @@
 [![MIT License](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![Canoo Incubator](https://img.shields.io/badge/canoo-incubator-be1432.svg?style=flat)](https://github.com/canoo)
 
+~~~html
+<app-location route="{{route}}" use-hash-as-path></app-location>
+
+<canoo-routes
+    route="[[route.path]]"
+    attr-for-selected="name"
+    selected="{{routeName}}"
+    params="{{routeParams}}">
+  <canoo-route name="foo" regexp pattern="/foo"></canoo-route>
+  <canoo-route name="bar" regexp pattern="/bar"></canoo-route>
+  <canoo-route name="baz" regexp pattern="/baz/(.+)"></canoo-route>
+</canoo-routes>
+
+<iron-pages
+    attr-for-selected="name"
+    selected="[[routeName]]">
+  <div name="foo">foo</div>
+  <div name="bar">bar</div>
+  <div name="baz">baz</div>
+</iron-pages>
+~~~
+
 Simple routes.
 
 ~~~html
