@@ -1,5 +1,10 @@
 # canoo-route-elements
 
+[![Travis Build](https://img.shields.io/travis/canoo/canoo-route-elements.svg)](https://travis-ci.org/canoo/canoo-route-elements)
+[![Polymer 2](https://img.shields.io/badge/webcomponents-Polymer%202-orange.svg?style=flat)](https://www.polymer-project.org/2.0/start/)
+[![MIT License](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
+[![Canoo Incubator](https://img.shields.io/badge/canoo-incubator-be1432.svg?style=flat)](https://github.com/canoo)
+
 Simple routes.
 
 ~~~html
