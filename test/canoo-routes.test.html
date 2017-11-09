@@ -15,9 +15,9 @@
   <template>
     <dom-bind>
       <template>
-        <canoo-routes id="routes" attr-for-selected="name" selected="{{routeName}}" route="bar">
-          <canoo-route name="foo"></canoo-route>
-          <canoo-route name="bar"></canoo-route>
+        <canoo-routes id="routes" attr-for-selected="name" selected="{{routeName}}" route="/bar">
+          <canoo-route name="foo" pattern="/foo"></canoo-route>
+          <canoo-route name="bar" pattern="/bar"></canoo-route>
         </canoo-routes>
       </template>
     </dom-bind>
