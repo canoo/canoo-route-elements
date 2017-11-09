@@ -1,16 +1,16 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../iron-selector/iron-selectable.html">
 
-<dom-module id="canoo-routes">
+<dom-module id="oo-routes">
 
   <script>
     const NO_MATCH = false
 
-    class CanooRoutes extends Polymer.mixinBehaviors(
+    class OoRoutes extends Polymer.mixinBehaviors(
       [Polymer.IronSelectableBehavior], Polymer.Element) {
 
       static get is() {
-        return "canoo-routes"
+        return "oo-routes"
       }
 
       static get properties() {
@@ -100,7 +100,7 @@
       return params
     }
 
-    window.customElements.define(CanooRoutes.is, CanooRoutes)
+    window.customElements.define(OoRoutes.is, OoRoutes)
   </script>
 
 </dom-module>

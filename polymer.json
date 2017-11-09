@@ -1,8 +1,8 @@
 {
   "entrypoint": "index.html",
   "sources": [
-    "canoo-route.html",
-    "canoo-routes.html",
+    "oo-route.html",
+    "oo-routes.html",
     "index.html"
   ],
   "extraDependencies": [

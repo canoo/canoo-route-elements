@@ -4,22 +4,22 @@
 <link rel="import" href="../../polymer/lib/elements/dom-bind.html">
 <link rel="import" href="../../app-route/app-location.html">
 <link rel="import" href="../../iron-pages/iron-pages.html">
-<link rel="import" href="../canoo-route.html">
-<link rel="import" href="../canoo-routes.html">
+<link rel="import" href="../oo-route.html">
+<link rel="import" href="../oo-routes.html">
 
 <dom-bind>
   <template>
     <app-location route="{{route}}" use-hash-as-path></app-location>
 
-    <canoo-routes
+    <oo-routes
         route="[[route.path]]"
         attr-for-selected="name"
         selected="{{routeName}}"
         params="{{routeParams}}">
-      <canoo-route name="foo" regexp pattern="/foo"></canoo-route>
-      <canoo-route name="bar" regexp pattern="/bar"></canoo-route>
-      <canoo-route name="baz" regexp pattern="/baz/(.+)"></canoo-route>
-    </canoo-routes>
+      <oo-route name="foo" regexp pattern="/foo"></oo-route>
+      <oo-route name="bar" regexp pattern="/bar"></oo-route>
+      <oo-route name="baz" regexp pattern="/baz/(.+)"></oo-route>
+    </oo-routes>
 
     <div>
       <a href="#/foo">foo</a>
@@ -43,7 +43,7 @@
 
     document.addEventListener("WebComponentsReady", () => {
       const location = document.querySelector("app-location")
-      const routes = document.querySelector("canoo-routes")
+      const routes = document.querySelector("oo-routes")
 
       location.addEventListener("route-changed", () => {
         console.log("location", location.route)
