@@ -4,7 +4,17 @@
 <link rel="import" href="../canoo-route.html">
 <link rel="import" href="../canoo-routes.html">
 
-<canoo-routes>
-  <canoo-route></canoo-route>
-  <canoo-route></canoo-route>
-</canoo-routes>
+<dom-bind>
+  <template>
+    <canoo-routes
+        id="routes"
+        attr-for-selected="name"
+        selected="{{routeName}}"
+        route="/baz/quux"
+        params="{{routeParams}}">
+      <canoo-route name="foo" regexp pattern="/foo"></canoo-route>
+      <canoo-route name="bar" regexp pattern="/bar"></canoo-route>
+      <canoo-route name="baz" regexp pattern="/baz/(.+)"></canoo-route>
+    </canoo-routes>
+  </template>
+</dom-bind>

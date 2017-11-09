@@ -13,14 +13,30 @@
 
 <test-fixture id="SimpleRoutes">
   <template>
-    <dom-bind>
-      <template>
-        <canoo-routes id="routes" attr-for-selected="name" selected="{{routeName}}" route="/bar">
-          <canoo-route name="foo" pattern="/foo"></canoo-route>
-          <canoo-route name="bar" pattern="/bar"></canoo-route>
-        </canoo-routes>
-      </template>
-    </dom-bind>
+    <canoo-routes route="/bar">
+      <canoo-route pattern="/foo"></canoo-route>
+      <canoo-route pattern="/bar"></canoo-route>
+    </canoo-routes>
+  </template>
+</test-fixture>
+
+<test-fixture id="RegexpRoutes">
+  <template>
+    <canoo-routes attr-for-selected="name" route="/baz/quux">
+      <canoo-route name="foo" regexp pattern="/foo"></canoo-route>
+      <canoo-route name="bar" regexp pattern="/bar"></canoo-route>
+      <canoo-route name="baz" regexp pattern="/baz/(.+)"></canoo-route>
+    </canoo-routes>
+  </template>
+</test-fixture>
+
+<test-fixture id="PatternRoutes">
+  <template>
+    <canoo-routes attr-for-selected="name" route="/baz/quux">
+      <canoo-route name="foo" pattern="/foo"></canoo-route>
+      <canoo-route name="bar" pattern="/bar"></canoo-route>
+      <canoo-route name="baz" pattern="/baz/:path"></canoo-route>
+    </canoo-routes>
   </template>
 </test-fixture>
 
@@ -46,15 +62,87 @@
       test("has local name", done => {
         flush(() => {
           // expect:
-          expect(routes.$.routes.localName).to.eql("canoo-routes")
+          expect(routes.localName).to.eql("canoo-routes")
           done()
         })
       })
 
       test("can select route", done => {
+        routes.route = "/bar"
+
         flush(() => {
           // expect:
-          expect(routes.routeName).to.eql("bar")
+          expect(routes.selected).to.eql("1")
+          done()
+        })
+      })
+    })
+
+    //----------------------------------------------------------------------------------------------
+    // SUITE.
+    //----------------------------------------------------------------------------------------------
+
+    suite("regexp routes", () => {
+      let routes
+
+      setup(() => {
+        // given:
+        routes = fixture("RegexpRoutes")
+      })
+
+      test("can select route", done => {
+        routes.route = "/bar"
+
+        flush(() => {
+          // expect:
+          expect(routes.selected).to.eql("bar")
+          expect(routes.params).to.eql([])
+          done()
+        })
+      })
+
+      test("can select route pattern", done => {
+        routes.route = "/baz/quux"
+
+        flush(() => {
+          // expect:
+          expect(routes.selected).to.eql("baz")
+          expect(routes.params).to.eql(["quux"])
+          done()
+        })
+      })
+    })
+
+    //----------------------------------------------------------------------------------------------
+    // SUITE.
+    //----------------------------------------------------------------------------------------------
+
+    suite("pattern routes", () => {
+      let routes
+
+      setup(() => {
+        // given:
+        routes = fixture("PatternRoutes")
+      })
+
+      test("can select route", done => {
+        routes.route = "/bar"
+
+        flush(() => {
+          // expect:
+          expect(routes.selected).to.eql("bar")
+          expect(routes.params).to.eql({})
+          done()
+        })
+      })
+
+      test("can select route pattern", done => {
+        routes.route = "/baz/quux"
+
+        flush(() => {
+          // expect:
+          expect(routes.selected).to.eql("baz")
+          expect(routes.params).to.eql({ path: "quux" })
           done()
         })
       })
