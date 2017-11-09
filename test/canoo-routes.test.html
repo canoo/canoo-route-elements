@@ -13,14 +13,11 @@
 
 <test-fixture id="SimpleRoutes">
   <template>
-    <dom-bind>
-      <template>
-        <canoo-routes id="routes" attr-for-selected="name" selected="{{routeName}}" route="/bar">
-          <canoo-route name="foo" pattern="/foo"></canoo-route>
-          <canoo-route name="bar" pattern="/bar"></canoo-route>
-        </canoo-routes>
-      </template>
-    </dom-bind>
+    <canoo-routes attr-for-selected="name" route="/baz/quux">
+      <canoo-route name="foo" pattern="/foo"></canoo-route>
+      <canoo-route name="bar" pattern="/bar"></canoo-route>
+      <canoo-route name="baz" pattern="/baz/(.+)"></canoo-route>
+    </canoo-routes>
   </template>
 </test-fixture>
 
@@ -46,15 +43,29 @@
       test("has local name", done => {
         flush(() => {
           // expect:
-          expect(routes.$.routes.localName).to.eql("canoo-routes")
+          expect(routes.localName).to.eql("canoo-routes")
           done()
         })
       })
 
       test("can select route", done => {
+        routes.route = "/bar"
+
         flush(() => {
           // expect:
-          expect(routes.routeName).to.eql("bar")
+          expect(routes.selected).to.eql("bar")
+          expect(routes.params).to.eql([])
+          done()
+        })
+      })
+
+      test("can select route pattern", done => {
+        routes.route = "/baz/quux"
+
+        flush(() => {
+          // expect:
+          expect(routes.selected).to.eql("baz")
+          expect(routes.params).to.eql(["quux"])
           done()
         })
       })
