@@ -4,13 +4,38 @@
 <dom-module id="canoo-routes">
 
   <script>
-    class CanooRoutes extends Polymer.Element {
+    class CanooRoutes extends Polymer.mixinBehaviors(
+      [Polymer.IronSelectableBehavior], Polymer.Element) {
+
       static get is() {
         return "canoo-routes"
       }
 
       static get properties() {
-        return {}
+        return {
+          route: {
+            type: String
+          }
+        }
+      }
+
+      ready() {
+        super.ready()
+        this.addEventListener("iron-items-changed", this._onItemsChanged)
+      }
+
+      _onItemsChanged() {
+        for (const itemIndex in this.items) {
+          const routeItem = this.items[itemIndex]
+          if (this._matchRoute(routeItem)) {
+            this.selectIndex(itemIndex)
+            break
+          }
+        }
+      }
+
+      _matchRoute(routeItem) {
+        return routeItem.pattern === this.route
       }
     }
 
