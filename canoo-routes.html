@@ -16,13 +16,19 @@
       static get properties() {
         return {
           route: {
-            type: String
+            type: String,
+            notify: true,
+            reflectToAttribute: true,
+            observer: "_onItemsChanged"
+          },
+          selected: {
+            type: Object,
+            reflectToAttribute: true
           },
           params: {
             type: String,
             notify: true
-          },
-          selected: Object
+          }
         }
       }
 

@@ -1,20 +1,59 @@
 <meta charset="utf-8">
 
 <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+<link rel="import" href="../../polymer/lib/elements/dom-bind.html">
+<link rel="import" href="../../app-route/app-location.html">
+<link rel="import" href="../../iron-pages/iron-pages.html">
 <link rel="import" href="../canoo-route.html">
 <link rel="import" href="../canoo-routes.html">
 
 <dom-bind>
   <template>
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+
     <canoo-routes
-        id="routes"
+        route="[[route.path]]"
         attr-for-selected="name"
         selected="{{routeName}}"
-        route="/baz/quux"
         params="{{routeParams}}">
       <canoo-route name="foo" regexp pattern="/foo"></canoo-route>
       <canoo-route name="bar" regexp pattern="/bar"></canoo-route>
       <canoo-route name="baz" regexp pattern="/baz/(.+)"></canoo-route>
     </canoo-routes>
+
+    <div>
+      <a href="#/foo">foo</a>
+      <a href="#/bar">bar</a>
+      <a href="#/baz/quux?key=val">baz</a>
+    </div>
+
+    <br>
+
+    <iron-pages
+        attr-for-selected="name"
+        selected="[[routeName]]">
+      <div name="foo">foo</div>
+      <div name="bar">bar</div>
+      <div name="baz">baz</div>
+    </iron-pages>
+
   </template>
+
+  <script>
+
+    document.addEventListener("WebComponentsReady", () => {
+      const location = document.querySelector("app-location")
+      const routes = document.querySelector("canoo-routes")
+
+      location.addEventListener("route-changed", () => {
+        console.log("location", location.route)
+      })
+
+      routes.addEventListener("selected-changed", () => {
+        console.log("routes.selected", routes.selected)
+        console.log("routes.route", routes.route)
+      })
+    })
+
+  </script>
 </dom-bind>
