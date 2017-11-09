@@ -13,9 +13,9 @@ $ bower install --save PolymerElements/iron-pages
 
 ~~~html
 <link rel="import" href="../app-route/app-location.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
 <link rel="import" href="../canoo-route-elements/canoo-route.html">
 <link rel="import" href="../canoo-route-elements/canoo-routes.html">
-<link rel="import" href="../iron-pages/iron-pages.html">
 
 <app-location route="{{route}}" use-hash-as-path></app-location>
 
