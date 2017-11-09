@@ -21,7 +21,8 @@
           params: {
             type: String,
             notify: true
-          }
+          },
+          selected: Object
         }
       }
 
@@ -58,6 +59,36 @@
 
       // Did not match.
       return NO_MATCH
+    }
+
+    function matchRoutePathPattern(path, pattern) {
+      const pathElements = path.split("/")
+      const patternElements = pattern.split("/")
+      const params = {}
+
+      // Match all pattern elements.
+      for (index in patternElements) {
+        const pathElement = pathElements[index]
+        const patternElement = patternElements[index]
+
+        // Is direct match.
+        if (pathElement === patternElement) {
+          continue
+        }
+
+        // Is wildcard parameter.
+        if (patternElement.startsWith(":")) {
+          const param = patternElement.slice(1)
+          params[param] = pathElement
+          continue
+        }
+
+        // Did not match.
+        return NO_MATCH
+      }
+
+      // All elements matched.
+      return params
     }
 
     window.customElements.define(CanooRoutes.is, CanooRoutes)
