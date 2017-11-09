@@ -44,7 +44,10 @@
       }
 
       _matchRoute(routeItem) {
-        return matchRoutePathRegexp(this.route, routeItem.pattern)
+        if (routeItem.regexp) {
+          return matchRoutePathRegexp(this.route, routeItem.pattern)
+        }
+        return matchRoutePathPattern(this.route, routeItem.pattern)
       }
     }
 
