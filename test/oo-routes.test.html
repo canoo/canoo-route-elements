@@ -23,9 +23,9 @@
 <test-fixture id="RegexpRoutes">
   <template>
     <oo-routes attr-for-selected="name" route="/baz/quux">
-      <oo-route name="foo" regexp pattern="/foo"></oo-route>
-      <oo-route name="bar" regexp pattern="/bar"></oo-route>
-      <oo-route name="baz" regexp pattern="/baz/(.+)"></oo-route>
+      <oo-route name="foo" use-regexp pattern="/foo"></oo-route>
+      <oo-route name="bar" use-regexp pattern="/bar"></oo-route>
+      <oo-route name="baz" use-regexp pattern="/baz/(.+)"></oo-route>
     </oo-routes>
   </template>
 </test-fixture>
@@ -144,6 +144,39 @@
           expect(routes.selected).to.eql("baz")
           expect(routes.params).to.eql({ path: "quux" })
           done()
+        })
+      })
+    })
+
+    //----------------------------------------------------------------------------------------------
+    // SUITE.
+    //----------------------------------------------------------------------------------------------
+
+    suite("parse route path", () => {
+      let routes
+
+      setup(() => {
+        // given:
+        routes = fixture("SimpleRoutes")
+      })
+
+      test("fragment with path segments", () => {
+        // expect:
+        expect(routes._parseRoutePath("/foo")).to.eql({
+          path: "/foo",
+          query: "",
+          pathSegments: ["", "foo"],
+          queryParams: {}
+        })
+      })
+
+      test("fragment with path segments and query params", () => {
+        // expect:
+        expect(routes._parseRoutePath("/foo/bar/baz?key=val&flag")).to.eql({
+          path: "/foo/bar/baz",
+          query: "key=val&flag",
+          pathSegments: ["", "foo", "bar", "baz"],
+          queryParams: { key: "val", flag: null }
         })
       })
     })

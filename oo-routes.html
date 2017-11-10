@@ -50,10 +50,15 @@
       }
 
       _matchRoute(routeItem) {
-        if (routeItem.regexp) {
-          return matchRoutePathRegexp(this.route, routeItem.pattern)
+        const { path, queryParams } = this._parseRoutePath(this.route)
+        if (routeItem.useRegexp) {
+          return matchRoutePathRegexp(path, routeItem.pattern)
         }
-        return matchRoutePathPattern(this.route, routeItem.pattern)
+        return matchRoutePathPattern(path, routeItem.pattern)
+      }
+
+      _parseRoutePath(routePath) {
+        return parseRoutePath(routePath)
       }
     }
 
@@ -98,6 +103,36 @@
 
       // All elements matched.
       return params
+    }
+
+    function parseRoutePath(routePath) {
+      const T_SLASH = "/"
+      const T_QUESTION_MARK = "?"
+      const T_AMPERSAND = "&"
+      const T_EQUALS_SIGN = "="
+
+      // path and query.
+      const [path, pathRest] = routePath.split(T_QUESTION_MARK, 2)
+      const query = pathRest || ""
+
+      // path segments.
+      const pathSegments = path.split(T_SLASH)
+
+      // query params.
+      const queryParams = query.split(T_AMPERSAND)
+        .filter(param => !isEmptyString(param))
+        .map(param => (
+          param.split(T_EQUALS_SIGN, 2)
+        ))
+        .reduce((result, param) => (
+          result[param[0]] = param[1] || null, result
+        ), {})
+
+      return { path, query, pathSegments, queryParams }
+    }
+
+    function isEmptyString(value) {
+      return value === ""
     }
 
     window.customElements.define(OoRoutes.is, OoRoutes)
