@@ -1,9 +1,21 @@
 # oo-route-elements
 
-[![Travis Build](https://img.shields.io/travis/canoo/canoo-route-elements.svg)](https://travis-ci.org/canoo/canoo-route-elements)
+[![Travis Build](https://img.shields.io/travis/canoo/oo-route-elements.svg)](https://travis-ci.org/canoo/oo-route-elements)
 [![MIT License](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![Polymer 2](https://img.shields.io/badge/webcomponents-Polymer%202-orange.svg?style=flat)](https://www.polymer-project.org/2.0/start/)
 <!-- [![Canoo Incubator](https://img.shields.io/badge/canoo-incubator-be1432.svg?style=flat)](https://github.com/canoo) -->
+
+**Table of Contents:**
+
+<!-- TOC depthFrom:2 -->
+
+- [Usage](#usage)
+- [Examples](#examples)
+- [Patterns](#patterns)
+
+<!-- /TOC -->
+
+## Usage
 
 ~~~
 $ bower install --save canoo/oo-route-elements
@@ -24,9 +36,9 @@ $ bower install --save PolymerElements/iron-pages
     attr-for-selected="name"
     selected="{{routeName}}"
     params="{{routeParams}}">
-  <oo-route name="foo" regexp pattern="/foo"></oo-route>
-  <oo-route name="bar" regexp pattern="/bar"></oo-route>
-  <oo-route name="baz" regexp pattern="/baz/(.+)"></oo-route>
+  <oo-route name="foo" use-regexp pattern="/foo"></oo-route>
+  <oo-route name="bar" use-regexp pattern="/bar"></oo-route>
+  <oo-route name="baz" use-regexp pattern="/baz/(.+)"></oo-route>
 </oo-routes>
 
 <iron-pages
@@ -38,7 +50,7 @@ $ bower install --save PolymerElements/iron-pages
 </iron-pages>
 ~~~
 
-## Usage
+## Examples
 
 Simple routes.
 
@@ -53,9 +65,9 @@ Routes with regular expression patterns.
 
 ~~~html
 <oo-routes attr-for-selected="name" route="/baz/quux">
-  <oo-route name="foo" regexp pattern="/foo"></oo-route>
-  <oo-route name="bar" regexp pattern="/bar"></oo-route>
-  <oo-route name="baz" regexp pattern="/baz/(.+)"></oo-route>
+  <oo-route name="foo" use-regexp pattern="/foo"></oo-route>
+  <oo-route name="bar" use-regexp pattern="/bar"></oo-route>
+  <oo-route name="baz" use-regexp pattern="/baz/(.+)"></oo-route>
 </oo-routes>
 ~~~
 
@@ -68,3 +80,19 @@ Routes with patterns.
   <oo-route name="baz" pattern="/baz/:path"></oo-route>
 </oo-routes>
 ~~~
+
+## Patterns
+
+>Every HTTP URL conforms to the syntax of a generic URI. A generic URI is of the form:
+>
+>~~~
+>scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
+>~~~
+
+
+Patterns | Route | Matched Route | Matched Params
+---------|-------|---------------|----------------
+`<oo-route name="foo" pattern="/foo">` <br> `<oo-route name="bar" pattern="/bar">` |  `{ path: "/foo" }` | foo | {}
+`{ foo: "/foo", bar: "/bar" }` | `{ path: "/foo" }` | foo | {}
+`{ foo: "/foo", bar: "/bar" }` | `{ path: "/bar" }` | bar | {}
+`{ foo: "/foo", bar: "/bar" }` | `{ path: "/baz" }` | *none* | {}
