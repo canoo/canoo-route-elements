@@ -12,6 +12,7 @@
 - [Usage](#usage)
 - [Examples](#examples)
 - [Patterns](#patterns)
+- [Semantic Versions](#semantic-versions)
 
 <!-- /TOC -->
 
@@ -96,3 +97,10 @@ Patterns | Route | Matched Route | Matched Params
 `{ foo: "/foo", bar: "/bar" }` | `{ path: "/foo" }` | foo | {}
 `{ foo: "/foo", bar: "/bar" }` | `{ path: "/bar" }` | bar | {}
 `{ foo: "/foo", bar: "/bar" }` | `{ path: "/baz" }` | *none* | {}
+
+## Semantic Versions
+
+- Version number format `MAJOR.MINOR.PATCH`, e.g. "1.5.3".
+- Increase MAJOR for breaking changes.
+- Increase MINOR for new features.
+- Increase PATCH for bug fixes.

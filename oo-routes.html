@@ -4,7 +4,7 @@
 <dom-module id="oo-routes">
 
   <script>
-    const NO_MATCH = false
+    const NO_MATCH = null
 
     class OoRoutes extends Polymer.mixinBehaviors(
       [Polymer.IronSelectableBehavior], Polymer.Element) {
@@ -23,11 +23,14 @@
           },
           selected: {
             type: Object,
-            reflectToAttribute: true
+            notify: true,
+            reflectToAttribute: true,
+            value: null
           },
           params: {
             type: String,
-            notify: true
+            notify: true,
+            value: () => { return {} }
           }
         }
       }
@@ -51,10 +54,16 @@
 
       _matchRoute(routeItem) {
         const { path, queryParams } = this._parseRoutePath(this.route)
-        if (routeItem.useRegexp) {
-          return matchRoutePathRegexp(path, routeItem.pattern)
+
+        const params = routeItem.useRegexp
+          ? matchRoutePathRegexp(path, routeItem.pattern)
+          : matchRoutePathPattern(path, routeItem.pattern)
+        if (params === NO_MATCH) { return NO_MATCH }
+
+        if (routeItem.mapQueryToParams) {
+          Object.assign(params, queryParams)
         }
-        return matchRoutePathPattern(path, routeItem.pattern)
+        return params
       }
 
       _parseRoutePath(routePath) {
@@ -68,7 +77,7 @@
 
       // Did match regular expression.
       if (match) {
-        return match.slice(1)
+        return Object.assign({}, match.slice(1))
       }
 
       // Did not match.
@@ -124,8 +133,8 @@
         .map(param => (
           param.split(T_EQUALS_SIGN, 2)
         ))
-        .reduce((result, param) => (
-          result[param[0]] = param[1] || null, result
+        .reduce((result, [key, value]) => (
+          result[key] = value || null, result
         ), {})
 
       return { path, query, pathSegments, queryParams }

@@ -40,6 +40,13 @@
   </template>
 </test-fixture>
 
+<test-fixture id="QueryRoutes">
+  <template>
+    <oo-routes attr-for-selected="name" route="/baz/quux?key=val&flag">
+      <oo-route name="baz" pattern="/baz/:path" map-query-to-params></oo-route>
+    </oo-routes>
+  </template>
+</test-fixture>
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- FEATURES.
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -96,7 +103,7 @@
         flush(() => {
           // expect:
           expect(routes.selected).to.eql("bar")
-          expect(routes.params).to.eql([])
+          expect(routes.params).to.eql({})
           done()
         })
       })
@@ -107,7 +114,18 @@
         flush(() => {
           // expect:
           expect(routes.selected).to.eql("baz")
-          expect(routes.params).to.eql(["quux"])
+          expect(routes.params).to.eql({ 0: "quux" })
+          done()
+        })
+      })
+
+      test("no match", done => {
+        routes.route = "/quux"
+
+        flush(() => {
+          // expect:
+          expect(routes.selected).to.eql(null)
+          expect(routes.params).to.eql({})
           done()
         })
       })
@@ -143,6 +161,39 @@
           // expect:
           expect(routes.selected).to.eql("baz")
           expect(routes.params).to.eql({ path: "quux" })
+          done()
+        })
+      })
+
+      test("no match", done => {
+        routes.route = "/quux"
+
+        flush(() => {
+          // expect:
+          expect(routes.selected).to.eql(null)
+          expect(routes.params).to.eql({})
+          done()
+        })
+      })
+    })
+
+    //----------------------------------------------------------------------------------------------
+    // SUITE.
+    //----------------------------------------------------------------------------------------------
+
+    suite("query routes", () => {
+      let routes
+
+      setup(() => {
+        // given:
+        routes = fixture("QueryRoutes")
+      })
+
+      test("can select route", done => {
+        flush(() => {
+          // expect:
+          expect(routes.selected).to.eql("baz")
+          expect(routes.params).to.eql({ path: "quux", key: "val", flag: null })
           done()
         })
       })
