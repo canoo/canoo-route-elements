@@ -4,8 +4,6 @@
 <dom-module id="oo-routes">
 
   <script>
-    const NO_MATCH = null
-
     class OoRoutes extends Polymer.mixinBehaviors(
       [Polymer.IronSelectableBehavior], Polymer.Element) {
 
@@ -71,6 +69,14 @@
       }
     }
 
+    const NO_MATCH = null
+
+    const T_COLON = ":"
+    const T_SLASH = "/"
+    const T_AMPERSAND = "&"
+    const T_QUESTION_MARK = "?"
+    const T_EQUALS_SIGN = "="
+
     function matchRoutePathRegexp(path, pattern) {
       const regexp = new RegExp(pattern)
       const match = regexp.exec(path)
@@ -85,8 +91,8 @@
     }
 
     function matchRoutePathPattern(path, pattern) {
-      const pathElements = path.split("/")
-      const patternElements = pattern.split("/")
+      const pathElements = path.split(T_SLASH)
+      const patternElements = pattern.split(T_SLASH)
       const params = {}
 
       // Match all pattern elements.
@@ -100,7 +106,7 @@
         }
 
         // Is wildcard parameter.
-        if (patternElement.startsWith(":")) {
+        if (patternElement.startsWith(T_COLON)) {
           const param = patternElement.slice(1)
           params[param] = pathElement
           continue
@@ -115,10 +121,6 @@
     }
 
     function parseRoutePath(routePath) {
-      const T_SLASH = "/"
-      const T_QUESTION_MARK = "?"
-      const T_AMPERSAND = "&"
-      const T_EQUALS_SIGN = "="
 
       // path and query.
       const [path, pathRest] = routePath.split(T_QUESTION_MARK, 2)
