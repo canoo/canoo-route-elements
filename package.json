@@ -1,7 +1,7 @@
 {
   "name": "oo-route-elements",
   "description": "Declarative, self-describing routing",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Benjamin Gudehus <benjamin.gudehus@canoo.com>",
   "repository": {
     "type": "git",
