@@ -3,31 +3,36 @@
 <dom-module id="oo-route">
 
   <script>
-    class OoRoute extends Polymer.Element {
-      static get is() {
-        return "oo-route"
-      }
+    // Declare in local function scope to avoid bleeding variables into global `window`.
+    (function () {
 
-      static get properties() {
-        return {
-          pattern: {
-            type: String
-          },
+      class OoRoute extends Polymer.Element {
+        static get is() {
+          return "oo-route"
+        }
 
-          useRegexp: {
-            type: Boolean,
-            value: false
-          },
+        static get properties() {
+          return {
+            pattern: {
+              type: String
+            },
 
-          mapQueryToParams: {
-            type: Boolean,
-            value: false
+            useRegexp: {
+              type: Boolean,
+              value: false
+            },
+
+            mapQueryToParams: {
+              type: Boolean,
+              value: false
+            }
           }
         }
       }
-    }
 
-    window.customElements.define(OoRoute.is, OoRoute)
+      window.customElements.define(OoRoute.is, OoRoute)
+
+    }())
   </script>
 
 </dom-module>

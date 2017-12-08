@@ -4,150 +4,155 @@
 <dom-module id="oo-routes">
 
   <script>
-    class OoRoutes extends Polymer.mixinBehaviors(
-      [Polymer.IronSelectableBehavior], Polymer.Element) {
+    // Declare in local function scope to avoid bleeding variables into global `window`.
+    (function () {
 
-      static get is() {
-        return "oo-routes"
-      }
+      class OoRoutes extends Polymer.mixinBehaviors(
+          [Polymer.IronSelectableBehavior], Polymer.Element) {
 
-      static get properties() {
-        return {
-          route: {
-            type: String,
-            notify: true,
-            reflectToAttribute: true,
-            observer: "_onItemsChanged"
-          },
+        static get is() {
+          return "oo-routes"
+        }
 
-          selected: {
-            type: Object,
-            notify: true,
-            reflectToAttribute: true,
-            value: null
-          },
+        static get properties() {
+          return {
+            route: {
+              type: String,
+              notify: true,
+              reflectToAttribute: true,
+              observer: "_onItemsChanged"
+            },
 
-          params: {
-            type: String,
-            notify: true,
-            value: () => { return {} }
+            selected: {
+              type: Object,
+              notify: true,
+              reflectToAttribute: true,
+              value: null
+            },
+
+            params: {
+              type: String,
+              notify: true,
+              value: () => { return {} }
+            }
           }
         }
-      }
 
-      ready() {
-        super.ready()
-        this.addEventListener("iron-items-changed", this._onItemsChanged)
-      }
+        ready() {
+          super.ready()
+          this.addEventListener("iron-items-changed", this._onItemsChanged)
+        }
 
-      _onItemsChanged() {
-        for (const itemIndex in this.items) {
-          const routeItem = this.items[itemIndex]
-          const routeParams = this._matchRoute(routeItem)
-          if (routeParams !== NO_MATCH) {
-            this.params = routeParams
-            this.selectIndex(itemIndex)
-            break
+        _onItemsChanged() {
+          for (const itemIndex in this.items) {
+            const routeItem = this.items[itemIndex]
+            const routeParams = this._matchRoute(routeItem)
+            if (routeParams !== NO_MATCH) {
+              this.params = routeParams
+              this.selectIndex(itemIndex)
+              break
+            }
           }
         }
-      }
 
-      _matchRoute(routeItem) {
-        const { path, queryParams } = this._parseRoutePath(this.route)
+        _matchRoute(routeItem) {
+          const { path, queryParams } = this._parseRoutePath(this.route)
 
-        const params = routeItem.useRegexp
-          ? matchRoutePathRegexp(path, routeItem.pattern)
-          : matchRoutePathPattern(path, routeItem.pattern)
-        if (params === NO_MATCH) { return NO_MATCH }
+          const params = routeItem.useRegexp
+            ? matchRoutePathRegexp(path, routeItem.pattern)
+            : matchRoutePathPattern(path, routeItem.pattern)
+          if (params === NO_MATCH) { return NO_MATCH }
 
-        if (routeItem.mapQueryToParams) {
-          Object.assign(params, queryParams)
-        }
-        return params
-      }
-
-      _parseRoutePath(routePath) {
-        return parseRoutePath(routePath)
-      }
-    }
-
-    const NO_MATCH = null
-
-    const T_COLON = ":"
-    const T_SLASH = "/"
-    const T_AMPERSAND = "&"
-    const T_QUESTION_MARK = "?"
-    const T_EQUALS_SIGN = "="
-
-    function matchRoutePathRegexp(path, pattern) {
-      const regexp = new RegExp(pattern)
-      const match = regexp.exec(path)
-
-      // Did match regular expression.
-      if (match) {
-        return Object.assign({}, match.slice(1))
-      }
-
-      // Did not match.
-      return NO_MATCH
-    }
-
-    function matchRoutePathPattern(path, pattern) {
-      const pathElements = path.split(T_SLASH)
-      const patternElements = pattern.split(T_SLASH)
-      const params = {}
-
-      // Match all pattern elements.
-      for (index in patternElements) {
-        const pathElement = pathElements[index]
-        const patternElement = patternElements[index]
-
-        // Is direct match.
-        if (pathElement === patternElement) {
-          continue
+          if (routeItem.mapQueryToParams) {
+            Object.assign(params, queryParams)
+          }
+          return params
         }
 
-        // Is wildcard parameter.
-        if (patternElement.startsWith(T_COLON)) {
-          const param = patternElement.slice(1)
-          params[param] = pathElement
-          continue
+        _parseRoutePath(routePath) {
+          return parseRoutePath(routePath)
+        }
+      }
+
+      const NO_MATCH = null
+
+      const T_COLON = ":"
+      const T_SLASH = "/"
+      const T_AMPERSAND = "&"
+      const T_QUESTION_MARK = "?"
+      const T_EQUALS_SIGN = "="
+
+      function matchRoutePathRegexp(path, pattern) {
+        const regexp = new RegExp(pattern)
+        const match = regexp.exec(path)
+
+        // Did match regular expression.
+        if (match) {
+          return Object.assign({}, match.slice(1))
         }
 
         // Did not match.
         return NO_MATCH
       }
 
-      // All elements matched.
-      return params
-    }
+      function matchRoutePathPattern(path, pattern) {
+        const pathElements = path.split(T_SLASH)
+        const patternElements = pattern.split(T_SLASH)
+        const params = {}
 
-    function parseRoutePath(routePath) {
-      // path and query.
-      const [path, pathRest] = routePath.split(T_QUESTION_MARK, 2)
-      const query = pathRest || ""
+        // Match all pattern elements.
+        for (index in patternElements) {
+          const pathElement = pathElements[index]
+          const patternElement = patternElements[index]
 
-      // path segments.
-      const pathSegments = path.split(T_SLASH)
+          // Is direct match.
+          if (pathElement === patternElement) {
+            continue
+          }
 
-      // query params.
-      const queryParams = query.split(T_AMPERSAND)
-        .filter(param => !isEmptyString(param))
-        .map(param => (
-          param.split(T_EQUALS_SIGN, 2)
-        ))
-        .reduce((result, [key, value]) => (
-          result[key] = value || null, result
-        ), {})
+          // Is wildcard parameter.
+          if (patternElement.startsWith(T_COLON)) {
+            const param = patternElement.slice(1)
+            params[param] = pathElement
+            continue
+          }
 
-      return { path, query, pathSegments, queryParams }
-    }
+          // Did not match.
+          return NO_MATCH
+        }
 
-    function isEmptyString(value) {
-      return value === ""
-    }
+        // All elements matched.
+        return params
+      }
 
-    window.customElements.define(OoRoutes.is, OoRoutes)
+      function parseRoutePath(routePath) {
+        // path and query.
+        const [path, pathRest] = routePath.split(T_QUESTION_MARK, 2)
+        const query = pathRest || ""
+
+        // path segments.
+        const pathSegments = path.split(T_SLASH)
+
+        // query params.
+        const queryParams = query.split(T_AMPERSAND)
+          .filter(param => !isEmptyString(param))
+          .map(param => (
+            param.split(T_EQUALS_SIGN, 2)
+          ))
+          .reduce((result, [key, value]) => (
+            result[key] = value || null, result
+          ), {})
+
+        return { path, query, pathSegments, queryParams }
+      }
+
+      function isEmptyString(value) {
+        return value === ""
+      }
+
+      window.customElements.define(OoRoutes.is, OoRoutes)
+
+    }())
   </script>
 
 </dom-module>
