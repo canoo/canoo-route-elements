@@ -1,6 +1,6 @@
 # oo-route-elements
 
-[![Travis Build](https://img.shields.io/travis/canoo/oo-route-elements.svg)](https://travis-ci.org/canoo/oo-route-elements)
+[![Travis Build](https://img.shields.io/travis/oolymer/oo-routes.svg)](https://travis-ci.org/oolymer/oo-routes)
 [![MIT License](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![Polymer 2](https://img.shields.io/badge/webcomponents-Polymer%202-orange.svg?style=flat)](https://www.polymer-project.org/2.0/start/)
 <!-- [![Canoo Incubator](https://img.shields.io/badge/canoo-incubator-be1432.svg?style=flat)](https://github.com/canoo) -->
@@ -19,16 +19,16 @@
 ## Usage
 
 ~~~
-$ bower install --save canoo/oo-route-elements
+$ bower install --save oolymer/oo-routes
 $ bower install --save PolymerElements/app-location
 $ bower install --save PolymerElements/iron-pages
 ~~~
 
 ~~~html
+<link rel="import" href="../oo-routes/oo-route.html">
+<link rel="import" href="../oo-routes/oo-routes.html">
 <link rel="import" href="../app-route/app-location.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
-<link rel="import" href="../oo-route-elements/oo-route.html">
-<link rel="import" href="../oo-route-elements/oo-routes.html">
 
 <app-location route="{{route}}" use-hash-as-path></app-location>
 
