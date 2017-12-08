@@ -1,7 +1,7 @@
 {
-  "name": "oo-route-elements",
+  "name": "oo-routes",
   "description": "Declarative, self-describing routing",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Benjamin Gudehus <benjamin.gudehus@canoo.com>",
   "repository": {
     "type": "git",
@@ -12,12 +12,13 @@
   "scripts": {
     "browser": "npm run serve & npm run watch",
     "build": "./node_modules/.bin/polymer build",
+    "build:docs": "./node_modules/.bin/polymer analyze > analysis.json",
     "lint": "npm run lint:polymer",
     "lint:js": "./node_modules/.bin/eslint . --ext js,html --ignore-path .gitignore",
     "lint:polymer": "./node_modules/.bin/polymer lint",
     "serve": "./node_modules/.bin/polymer serve --port 9090",
     "test": "./node_modules/.bin/polymer test --local chrome,firefox",
-    "watch": "./node_modules/.bin/browser-sync start --port 3000 --proxy 'localhost:9090' --no-ui --files '*.html, demo/*.html, test/*.html' --startPath '/components/oo-route-elements'"
+    "watch": "./node_modules/.bin/browser-sync start --port 3000 --proxy 'localhost:9090' --no-ui --files '*.html, demo/**/*.html, test/**/*.html' --startPath \"/components/$npm_package_name/\""
   },
   "devDependencies": {
     "bower": "1.8.2",
@@ -29,6 +30,6 @@
     "eslint-plugin-promise": "3.6.0",
     "eslint-plugin-standard": "3.0.1",
     "polymer-cli": "1.5.7",
-    "web-component-tester": "6.3.0"
+    "web-component-tester": "6.4.1"
   }
 }

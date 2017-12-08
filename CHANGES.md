@@ -1,5 +1,9 @@
 # CHANGES
 
+## 0.4.0 / UNRELEASED
+
+- (chore) Rename project to oo-routes.
+
 ## 0.3.0 / 2017-11-14
 
 - (feature) Handle query parameters. #5

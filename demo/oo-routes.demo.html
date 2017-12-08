@@ -16,15 +16,16 @@
         attr-for-selected="name"
         selected="{{routeName}}"
         params="{{routeParams}}">
-      <oo-route name="foo" use-regexp pattern="/foo"></oo-route>
-      <oo-route name="bar" use-regexp pattern="/bar"></oo-route>
-      <oo-route name="baz" use-regexp pattern="/baz/(.+)"></oo-route>
+      <oo-route name="one" use-regexp pattern="/one"></oo-route>
+      <oo-route name="two" use-regexp pattern="/two"></oo-route>
+      <oo-route name="three" use-regexp pattern="/three/(.+)" map-query-to-params></oo-route>
+      <!-- <oo-route name="three" pattern="/three/:param" map-query-to-params></oo-route> -->
     </oo-routes>
 
     <div>
-      <a href="#/foo">foo</a>
-      <a href="#/bar">bar</a>
-      <a href="#/baz/quux?key=val">baz</a>
+      <a href="#/one">one</a>
+      <a href="#/two">two</a>
+      <a href="#/three/arg?key=val">three</a>
     </div>
 
     <br>
@@ -32,16 +33,17 @@
     <iron-pages
         attr-for-selected="name"
         selected="[[routeName]]">
-      <div name="foo">foo</div>
-      <div name="bar">bar</div>
-      <div name="baz">baz</div>
+      <div name="one">one</div>
+      <div name="two">two</div>
+      <div name="three">three</div>
     </iron-pages>
 
   </template>
 
   <script>
 
-    document.addEventListener("WebComponentsReady", () => {
+    window.addEventListener("WebComponentsReady", () => {
+      const domBind = document.querySelector("dom-bind")
       const location = document.querySelector("app-location")
       const routes = document.querySelector("oo-routes")
 
@@ -52,6 +54,9 @@
       routes.addEventListener("selected-changed", () => {
         console.log("routes.selected", routes.selected)
         console.log("routes.route", routes.route)
+        console.log("routes.params", routes.params)
+        console.log("domBind.routeName", domBind.routeName)
+        console.log("domBind.routeParams", domBind.routeParams)
       })
     })
 
