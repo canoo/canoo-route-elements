@@ -1,8 +1,8 @@
 # CHANGES
 
-## 0.4.0 / UNRELEASED
+## 0.4.0 / 2017-12-08
 
-- (chore) Rename project to oo-routes.
+- (chore) Rename project to oo-routes. #8
 
 ## 0.3.0 / 2017-11-14
 

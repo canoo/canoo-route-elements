@@ -1,4 +1,4 @@
-# oo-route-elements
+# \<oo-routes\>
 
 [![Travis Build](https://img.shields.io/travis/oolymer/oo-routes.svg)](https://travis-ci.org/oolymer/oo-routes)
 [![MIT License](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
