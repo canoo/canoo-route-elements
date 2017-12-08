@@ -19,12 +19,14 @@
             reflectToAttribute: true,
             observer: "_onItemsChanged"
           },
+
           selected: {
             type: Object,
             notify: true,
             reflectToAttribute: true,
             value: null
           },
+
           params: {
             type: String,
             notify: true,
@@ -43,8 +45,8 @@
           const routeItem = this.items[itemIndex]
           const routeParams = this._matchRoute(routeItem)
           if (routeParams !== NO_MATCH) {
-            this.selectIndex(itemIndex)
             this.params = routeParams
+            this.selectIndex(itemIndex)
             break
           }
         }
@@ -121,7 +123,6 @@
     }
 
     function parseRoutePath(routePath) {
-
       // path and query.
       const [path, pathRest] = routePath.split(T_QUESTION_MARK, 2)
       const query = pathRest || ""

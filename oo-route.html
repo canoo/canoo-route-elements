@@ -3,7 +3,7 @@
 <dom-module id="oo-route">
 
   <script>
-    class OoRoute extends Polymer.Element {
+    class OoRoute extends Polymer.mixinBehaviors([], Polymer.Element) {
       static get is() {
         return "oo-route"
       }
@@ -13,10 +13,12 @@
           pattern: {
             type: String
           },
+
           useRegexp: {
             type: Boolean,
             value: false
           },
+
           mapQueryToParams: {
             type: Boolean,
             value: false
