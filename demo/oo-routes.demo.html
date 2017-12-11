@@ -26,6 +26,7 @@
       <a href="#/one">one</a>
       <a href="#/two">two</a>
       <a href="#/three/arg?key=val">three</a>
+      <a href="#/none">none</a>
     </div>
 
     <br>
@@ -48,6 +49,7 @@
       const routes = document.querySelector("oo-routes")
 
       location.addEventListener("route-changed", () => {
+        console.log("---")
         console.log("location", location.route)
       })
 
@@ -55,8 +57,9 @@
         console.log("routes.selected", routes.selected)
         console.log("routes.route", routes.route)
         console.log("routes.params", routes.params)
-        console.log("domBind.routeName", domBind.routeName)
-        console.log("domBind.routeParams", domBind.routeParams)
+        // console.log("---")
+        // console.log("domBind.routeName", domBind.routeName)
+        // console.log("domBind.routeParams", domBind.routeParams)
       })
     })
 

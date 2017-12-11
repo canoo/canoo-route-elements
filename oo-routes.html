@@ -6,7 +6,6 @@
   <script>
     // Declare in local function scope to avoid bleeding variables into global `window`.
     (function () {
-
       class OoRoutes extends Polymer.mixinBehaviors(
           [Polymer.IronSelectableBehavior], Polymer.Element) {
 
@@ -44,16 +43,40 @@
         }
 
         _onItemsChanged() {
+          let selectedIndex = null
+          let selected = null
+          let params = null
+
           for (const itemIndex in this.items) {
             const routeItem = this.items[itemIndex]
             const routeParams = this._matchRoute(routeItem)
             if (routeParams !== NO_MATCH) {
-              this.params = routeParams
-              this.selectIndex(itemIndex)
+              selectedIndex = itemIndex
+              selected = this._indexToValue(itemIndex) || null
+              params = routeParams
               break
             }
           }
+
+          // this ensures `selected` is either a value or null (not undefined), and
+          // `params` is an object (not an array when we have positional parameters).
+          this.setProperties({
+            selected: selected || null,
+            params: Object.assign({}, params)
+          })
         }
+
+        // _onItemsChanged() {
+        //   for (const itemIndex in this.items) {
+        //     const routeItem = this.items[itemIndex]
+        //     const routeParams = this._matchRoute(routeItem)
+        //     if (routeParams !== NO_MATCH) {
+        //       this.selectIndex(itemIndex)
+        //       this.params = routeParams
+        //       break
+        //     }
+        //   }
+        // }
 
         _matchRoute(routeItem) {
           const { path, queryParams } = this._parseRoutePath(this.route)
