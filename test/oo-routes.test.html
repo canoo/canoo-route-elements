@@ -11,6 +11,13 @@
 <!-- FIXTURES.
 <!-- ------------------------------------------------------------------------------------------ -->
 
+<test-fixture id="EmptyRoutes">
+  <template>
+    <oo-routes>
+    </oo-routes>
+  </template>
+</test-fixture>
+
 <test-fixture id="SimpleRoutes">
   <template>
     <oo-routes route="/bar">
@@ -54,6 +61,33 @@
 
 <script>
   suite("<oo-routes>", () => {
+
+    //----------------------------------------------------------------------------------------------
+    // SUITE.
+    //----------------------------------------------------------------------------------------------
+
+    suite("empty routes", () => {
+      let routes
+
+      setup(() => {
+        // given:
+        routes = fixture("EmptyRoutes")
+      })
+
+      test("to location path", () => {
+        // expect:
+        expect(routes._toLocationPath("/one", { foo: 1 })).to.eql("/one?foo=1")
+        expect(routes._toLocationPath("/two", { foo: 1, bar: 2 })).to.eql("/two?foo=1&bar=2")
+        expect(routes._toLocationPath("/three/:foo", { foo: 1, bar: 2 })).to.eql("/three/1?bar=2")
+      })
+
+      test("from location path", () => {
+        // expect:
+        expect(routes._fromLocationPath("/one", "/one?foo=1")).to.eql({ foo: "1" })
+        expect(routes._fromLocationPath("/two", "/two?foo=1&bar=2")).to.eql({ foo: "1", bar: "2" })
+        expect(routes._fromLocationPath("/three/:foo", "/three/1?bar=2")).to.eql({ foo: "1", bar: "2" })
+      })
+    })
 
     //----------------------------------------------------------------------------------------------
     // SUITE.

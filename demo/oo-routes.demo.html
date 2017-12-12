@@ -16,10 +16,12 @@
         attr-for-selected="name"
         selected="{{routeName}}"
         params="{{routeParams}}">
-      <oo-route name="one" use-regexp pattern="/one"></oo-route>
-      <oo-route name="two" use-regexp pattern="/two"></oo-route>
-      <oo-route name="three" use-regexp pattern="/three/(.+)" map-query-to-params></oo-route>
-      <!-- <oo-route name="three" pattern="/three/:param" map-query-to-params></oo-route> -->
+      <!-- <oo-route name="one" use-regexp pattern="/one"></oo-route> -->
+      <!-- <oo-route name="two" use-regexp pattern="/two"></oo-route> -->
+      <!-- <oo-route name="three" use-regexp pattern="/three/(.+)" map-query-to-params></oo-route> -->
+      <oo-route name="one" pattern="/one"></oo-route>
+      <oo-route name="two" pattern="/two"></oo-route>
+      <oo-route name="three" pattern="/three/:param" map-query-to-params></oo-route>
     </oo-routes>
 
     <div>
@@ -50,7 +52,7 @@
 
       location.addEventListener("route-changed", () => {
         console.log("---")
-        console.log("location", location.route)
+        console.log("location.route", location.route)
       })
 
       routes.addEventListener("selected-changed", () => {
@@ -61,6 +63,11 @@
         // console.log("domBind.routeName", domBind.routeName)
         // console.log("domBind.routeParams", domBind.routeParams)
       })
+
+      // console.log("one path:", routes._pathForRoute("one", { a: "b", c: "d" }))
+      // console.log("two path:", routes._pathForRoute("two", { a: "b", c: "d" }))
+      // console.log("three path:", routes._pathForRoute("three", { a: "b", c: "d", param: "arg" }))
+      // console.log("none path:", routes._pathForRoute("none", { a: "b", c: "d" }))
     })
 
   </script>
