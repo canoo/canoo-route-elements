@@ -12,20 +12,28 @@
     <app-location route="{{route}}" use-hash-as-path></app-location>
 
     <oo-routes
-        route="[[route.path]]"
+        route="{{route.path}}"
         attr-for-selected="name"
         selected="{{routeName}}"
         params="{{routeParams}}">
-      <oo-route name="one" use-regexp pattern="/one"></oo-route>
-      <oo-route name="two" use-regexp pattern="/two"></oo-route>
-      <oo-route name="three" use-regexp pattern="/three/(.+)" map-query-to-params></oo-route>
-      <!-- <oo-route name="three" pattern="/three/:param" map-query-to-params></oo-route> -->
+      <!-- <oo-route name="one" use-regexp pattern="/one"></oo-route> -->
+      <!-- <oo-route name="two" use-regexp pattern="/two"></oo-route> -->
+      <!-- <oo-route name="three" use-regexp pattern="/three/(.+)" map-query-to-params></oo-route> -->
+
+      <oo-route name="one" pattern="/one"></oo-route>
+      <oo-route name="two" pattern="/two"></oo-route>
+      <oo-route name="three" pattern="/three/:param" map-query-to-params></oo-route>
+
+      <oo-route name="default" use-regexp pattern="^$" map-query-to-params></oo-route>
+      <oo-route name="error" use-regexp pattern="(.*)" map-query-to-params></oo-route>
     </oo-routes>
 
     <div>
       <a href="#/one">one</a>
       <a href="#/two">two</a>
       <a href="#/three/arg?key=val">three</a>
+      <a href="#">default</a>
+      <a href="#/error">error</a>
     </div>
 
     <br>
@@ -47,16 +55,23 @@
       const location = document.querySelector("app-location")
       const routes = document.querySelector("oo-routes")
 
+      window.routes = routes
+      window.goto = routes.toLocationPath.bind(routes)
+
+      console.log("location.route", location.route)
+
       location.addEventListener("route-changed", () => {
-        console.log("location", location.route)
+        console.log("---")
+        console.log("location.route", location.route)
       })
 
       routes.addEventListener("selected-changed", () => {
         console.log("routes.selected", routes.selected)
         console.log("routes.route", routes.route)
         console.log("routes.params", routes.params)
-        console.log("domBind.routeName", domBind.routeName)
-        console.log("domBind.routeParams", domBind.routeParams)
+        // console.log("---")
+        // console.log("domBind.routeName", domBind.routeName)
+        // console.log("domBind.routeParams", domBind.routeParams)
       })
     })
 
