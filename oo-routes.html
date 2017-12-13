@@ -47,24 +47,28 @@
         }
 
         _onLocationPathChanged() {
-          this._pathToRoute(this.route, this.items)
+          this.fromLocationPath(this.route)
         }
 
         _onRouteItemsChanged() {
-          this._pathToRoute(this.route, this.items)
+          this.fromLocationPath(this.route)
         }
 
-        _pathToRoute(route, items) {
+        /**
+         *
+         */
+        fromLocationPath(locationPath) {
+          // TODO(hastebrot): pattern "/three/:param" with path "/three/" results in {param: undefined}.
           let selectedIndex = null
           let selected = null
           let params = null
 
-          for (const itemIndex in items) {
-            const routeItem = items[itemIndex]
+          for (const itemIndex in this.items) {
+            const routeItem = this.items[itemIndex]
             const { pattern, useRegexp, mapParamsToQuery } = routeItem
             const routeParams = useRegexp ?
-              this._fromLocationPathRegexp(pattern, route, mapParamsToQuery) :
-              this._fromLocationPath(pattern, route, mapParamsToQuery)
+              this._fromLocationPathRegexp(pattern, locationPath, mapParamsToQuery) :
+              this._fromLocationPath(pattern, locationPath, mapParamsToQuery)
             if (routeParams !== NO_MATCH) {
               selectedIndex = itemIndex
               selected = this._indexToValue(itemIndex) || null
@@ -81,22 +85,30 @@
           })
         }
 
-        _pathForRoute(name, params) {
-          let routePattern = null
+        /**
+         *
+         */
+        toLocationPath(name, params={}) {
+          let locationPath = null
 
           for (const itemIndex in this.items) {
             const routeItem = this.items[itemIndex]
             const routeName = this._indexToValue(itemIndex)
             if (routeName === name) {
-              routePattern = routeItem.pattern
+              const { pattern, useRegexp, mapParamsToQuery } = routeItem
+              if (pattern) {
+                locationPath = useRegexp ?
+                  this._toLocationPathRegexp(pattern, params) :
+                  this._toLocationPath(pattern, params)
+              }
+              break
             }
           }
 
-          if (routePattern) {
-            routePattern = this._toLocationPath(routePattern, params)
-          }
-
-          return routePattern
+          // TODO(hastebrot): when "name" matches no "routeItem" it will set locationPath to "".
+          this.setProperties({
+            route: locationPath || "" // <- should something like "error".
+          })
         }
 
         /**
