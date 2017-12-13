@@ -1,5 +1,9 @@
 # CHANGES
 
+## 0.5.0 / 2017-12-13
+
+- (feature) Introduce toLocationPath() and fromLocationPath(). #10
+
 ## 0.4.0 / 2017-12-08
 
 - (chore) Rename project to oo-routes. #8
