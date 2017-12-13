@@ -33,13 +33,16 @@ $ bower install --save PolymerElements/iron-pages
 <app-location route="{{route}}" use-hash-as-path></app-location>
 
 <oo-routes
-    route="[[route.path]]"
+    route="{{route.path}}"
     attr-for-selected="name"
     selected="{{routeName}}"
     params="{{routeParams}}">
   <oo-route name="foo" use-regexp pattern="/foo"></oo-route>
   <oo-route name="bar" use-regexp pattern="/bar"></oo-route>
   <oo-route name="baz" use-regexp pattern="/baz/(.+)"></oo-route>
+
+  <oo-route name="default" use-regexp pattern="^$"></oo-route>
+  <oo-route name="error" use-regexp pattern="(.*)"></oo-route>
 </oo-routes>
 
 <iron-pages
@@ -48,6 +51,7 @@ $ bower install --save PolymerElements/iron-pages
   <div name="foo">foo</div>
   <div name="bar">bar</div>
   <div name="baz">baz</div>
+  <div name="error">error</div>
 </iron-pages>
 ~~~
 
