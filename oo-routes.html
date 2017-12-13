@@ -92,7 +92,7 @@
          * from location.route.path.
          */
         _fromLocationPath(routePattern, locationPath, mapQueryToParams=true) {
-          const { path, queryParams } = this._parseRoutePath(locationPath)
+          const { path, queryParams } = this._parseLocationPath(locationPath)
 
           const routeParams = matchRoutePathPattern(path, routePattern)
           if (routeParams === NO_MATCH) { return NO_MATCH }
@@ -104,11 +104,27 @@
         }
 
         _toLocationPath(routePattern, routeParams, mapParamsToQuery=true) {
-          return buildRoutePathPattern(routePattern, routeParams)
+          return buildRoutePathPattern(routePattern, routeParams, mapParamsToQuery)
+        }
+
+        _fromLocationPathRegexp(routePattern, locationPath, mapQueryToParams=true) {
+          const { path, queryParams } = this._parseLocationPath(locationPath)
+
+          const routeParams = matchRoutePathRegexp(path, routePattern)
+          if (routeParams === NO_MATCH) { return NO_MATCH }
+
+          if (mapQueryToParams) {
+            Object.assign(routeParams, queryParams)
+          }
+          return routeParams
+        }
+
+        _toLocationPathRegexp(routePattern, routeParams, mapParamsToQuery=true) {
+          return buildRoutePathRegexp(routePattern, routeParams, mapParamsToQuery)
         }
 
         _matchRoute(route, routeItem) {
-          const { path, queryParams } = this._parseRoutePath(route)
+          const { path, queryParams } = this._parseLocationPath(route)
 
           const params = routeItem.useRegexp
             ? matchRoutePathRegexp(path, routeItem.pattern)
@@ -121,8 +137,8 @@
           return params
         }
 
-        _parseRoutePath(routePath) {
-          return parseRoutePath(routePath)
+        _parseLocationPath(locationPath) {
+          return parseLocationPath(locationPath)
         }
       }
 
@@ -147,12 +163,43 @@
         return NO_MATCH
       }
 
+      function buildRoutePathRegexp(pattern, params, withQueryParams=true) {
+        const regexp = new RegExp("(\\(.*?\\))", "g")
+        const match = regexp.exec(pattern)
+
+        // Did match regular expression.
+        let result = pattern
+        if (match) {
+          let groupIndex = 0
+          result = pattern.replace(regexp, () => {
+            const param = params[groupIndex]
+            delete params[groupIndex]
+            groupIndex += 1
+            return param
+          })
+        }
+
+        // Did not match.
+        let query = ""
+        if (withQueryParams) {
+          let index = 0
+          for (const key in params) {
+            const value = params[key]
+            const sep = index === 0 ? T_QUESTION_MARK : T_AMPERSAND
+            query = query + sep + key + T_EQUALS_SIGN + value
+            index += 1
+          }
+        }
+
+        return result + query
+      }
+
       function matchRoutePathPattern(path, pattern) {
         const pathElements = path.split(T_SLASH)
         const patternElements = pattern.split(T_SLASH)
         const params = {}
 
-        // Match all pattern elements.
+        // Match all path pattern elements.
         for (index in patternElements) {
           const pathElement = pathElements[index]
           const patternElement = patternElements[index]
@@ -177,9 +224,35 @@
         return params
       }
 
-      function parseRoutePath(routePath) {
+      function buildRoutePathPattern(pattern, params, withQueryParams=true) {
+        const queryParams = {}
+        for (const key in params) {
+          const value = params[key]
+          if (pattern.includes(T_COLON + key)) {
+            pattern = pattern.replace(T_COLON + key, value)
+          }
+          else {
+            queryParams[key] = value
+          }
+        }
+
+        let query = ""
+        if (withQueryParams) {
+          let index = 0
+          for (const key in queryParams) {
+            const value = queryParams[key]
+            const sep = index === 0 ? T_QUESTION_MARK : T_AMPERSAND
+            query = query + sep + key + T_EQUALS_SIGN + value
+            index += 1
+          }
+        }
+
+        return pattern + query
+      }
+
+      function parseLocationPath(locationPath) {
         // path and query.
-        const [path, pathRest] = routePath.split(T_QUESTION_MARK, 2)
+        const [path, pathRest] = locationPath.split(T_QUESTION_MARK, 2)
         const query = pathRest || ""
 
         // path segments.
@@ -196,44 +269,6 @@
           ), {})
 
         return { path, query, pathSegments, queryParams }
-      }
-
-      function buildRoutePathRegexp(pattern, params) {
-        const regexp = new RegExp(pattern)
-        // regexp replace params
-        // const match = regexp.exec(path)
-
-        // Did match regular expression.
-        // if (match) {
-        //   return Object.assign({}, match.slice(1))
-        // }
-
-        // Did not match.
-        // return NO_MATCH
-      }
-
-      function buildRoutePathPattern(pattern, params) {
-        const queryParams = {}
-        for (const key in params) {
-          const value = params[key]
-          if (pattern.includes(T_COLON + key)) {
-            pattern = pattern.replace(T_COLON + key, value)
-          }
-          else {
-            queryParams[key] = value
-          }
-        }
-
-        let query = ""
-        let index = 0
-        for (const key in queryParams) {
-          const value = queryParams[key]
-          const sep = index === 0 ? T_QUESTION_MARK : T_AMPERSAND
-          query = query + sep + key + T_EQUALS_SIGN + value
-          index += 1
-        }
-
-        return pattern + query
       }
 
       function isEmptyString(value) {
