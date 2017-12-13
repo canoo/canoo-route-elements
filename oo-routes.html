@@ -168,10 +168,10 @@
         const match = regexp.exec(pattern)
 
         // Did match regular expression.
-        let result = pattern
+        let path = pattern
         if (match) {
           let groupIndex = 0
-          result = pattern.replace(regexp, () => {
+          path = pattern.replace(regexp, () => {
             const param = params[groupIndex]
             delete params[groupIndex]
             groupIndex += 1
@@ -180,18 +180,7 @@
         }
 
         // Did not match.
-        let query = ""
-        if (withQueryParams) {
-          let index = 0
-          for (const key in params) {
-            const value = params[key]
-            const sep = index === 0 ? T_QUESTION_MARK : T_AMPERSAND
-            query = query + sep + key + T_EQUALS_SIGN + value
-            index += 1
-          }
-        }
-
-        return result + query
+        return buildLocationPath(path, withQueryParams ? params : {})
       }
 
       function matchRoutePathPattern(path, pattern) {
@@ -225,29 +214,20 @@
       }
 
       function buildRoutePathPattern(pattern, params, withQueryParams=true) {
+        let path = pattern
+
         const queryParams = {}
-        for (const key in params) {
-          const value = params[key]
-          if (pattern.includes(T_COLON + key)) {
-            pattern = pattern.replace(T_COLON + key, value)
+        for (const [key, value] of Object.entries(params)) {
+          const patternKey = T_COLON + key
+          if (path.includes(patternKey)) {
+            path = path.replace(patternKey, value)
           }
           else {
             queryParams[key] = value
           }
         }
 
-        let query = ""
-        if (withQueryParams) {
-          let index = 0
-          for (const key in queryParams) {
-            const value = queryParams[key]
-            const sep = index === 0 ? T_QUESTION_MARK : T_AMPERSAND
-            query = query + sep + key + T_EQUALS_SIGN + value
-            index += 1
-          }
-        }
-
-        return pattern + query
+        return buildLocationPath(path, withQueryParams ? queryParams : {})
       }
 
       function parseLocationPath(locationPath) {
@@ -269,6 +249,18 @@
           ), {})
 
         return { path, query, pathSegments, queryParams }
+      }
+
+      function buildLocationPath(path, queryParams) {
+        let queryString = ""
+        let index = 0
+        for (const [key, value] of Object.entries(queryParams)) {
+          const separator = index === 0 ? T_QUESTION_MARK : T_AMPERSAND
+          queryString += separator + key + T_EQUALS_SIGN + value
+          index += 1
+        }
+
+        return path + queryString
       }
 
       function isEmptyString(value) {
