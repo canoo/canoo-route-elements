@@ -66,109 +66,6 @@
     // SUITE.
     //----------------------------------------------------------------------------------------------
 
-    suite("empty router", () => {
-      let router
-
-      setup(() => {
-        // given:
-        router = fixture("EmptyRouter")
-      })
-
-      test("to location path pattern", () => {
-        // expect:
-        expect(router._toLocationPath("/seg1", { key1: "val1" }))
-          .to.eql("/seg1?key1=val1")
-        expect(router._toLocationPath("/seg1", { key1: "val1", key2: "val2" }))
-          .to.eql("/seg1?key1=val1&key2=val2")
-        expect(router._toLocationPath("/seg1/seg2", { key1: "val1", key2: "val2" }))
-          .to.eql("/seg1/seg2?key1=val1&key2=val2")
-
-        // and:
-        expect(router._toLocationPath("/seg1/:key1", { key1: "val1", key2: "val2" }))
-          .to.eql("/seg1/val1?key2=val2")
-        expect(router._toLocationPath("/seg1/:key1/:key2", { key1: "val1", key2: "val2" }))
-          .to.eql("/seg1/val1/val2")
-      })
-
-      test("from location path pattern", () => {
-        // expect:
-        expect(router._fromLocationPath("/seg1", "/seg1?key1=val1"))
-          .to.eql({ key1: "val1" })
-        expect(router._fromLocationPath("/seg1", "/seg1?key1=val1&key2=val2"))
-          .to.eql({ key1: "val1", key2: "val2" })
-        expect(router._fromLocationPath("/seg1/seg2", "/seg1/seg2?key1=val1&key2=val2"))
-          .to.eql({ key1: "val1", key2: "val2" })
-
-        // and:
-        expect(router._fromLocationPath("/seg1/:key1", "/seg1/val1?key2=val2"))
-          .to.eql({ key1: "val1", key2: "val2" })
-        expect(router._fromLocationPath("/seg1/:key1/:key2", "/seg1/val1/val2"))
-          .to.eql({ key1: "val1", key2: "val2" })
-      })
-
-      test("to location path regexp", () => {
-        // expect:
-        expect(router._toLocationPathRegexp("/seg1", { key1: "val1" }))
-          .to.eql("/seg1?key1=val1")
-        expect(router._toLocationPathRegexp("/seg1", { key1: "val1", key2: "val2" }))
-          .to.eql("/seg1?key1=val1&key2=val2")
-        expect(router._toLocationPathRegexp("/seg1/seg2", { key1: "val1", key2: "val2" }))
-          .to.eql("/seg1/seg2?key1=val1&key2=val2")
-
-        // and:
-        expect(router._toLocationPathRegexp("/seg1/(.+)", { 0: "val1", key2: "val2" }))
-          .to.eql("/seg1/val1?key2=val2")
-        expect(router._toLocationPathRegexp("/seg1/(.+)/(.+)", { 0: "val1", 1: "val2" }))
-          .to.eql("/seg1/val1/val2")
-      })
-
-      test("from location path regexp", () => {
-        // expect:
-        expect(router._fromLocationPathRegexp("/seg1", "/seg1?key1=val1"))
-          .to.eql({ key1: "val1" })
-        expect(router._fromLocationPathRegexp("/seg1", "/seg1?key1=val1&key2=val2"))
-          .to.eql({ key1: "val1", key2: "val2" })
-        expect(router._fromLocationPathRegexp("/seg1/seg2", "/seg1/seg2?key1=val1&key2=val2"))
-          .to.eql({ key1: "val1", key2: "val2" })
-
-        // and:
-        expect(router._fromLocationPathRegexp("/seg1/(.+)", "/seg1/val1?key2=val2"))
-          .to.eql({ 0: "val1", key2: "val2" })
-        expect(router._fromLocationPathRegexp("/seg1/(.+)/(.+)", "/seg1/val1/val2"))
-          .to.eql({ 0: "val1", 1: "val2" })
-      })
-
-      test("match default path", () => {
-        // expect:
-        expect(router._fromLocationPathRegexp("^$", ""))
-         .to.eql({})
-
-        // and:
-        expect(router._fromLocationPathRegexp("^$", "/"))
-         .to.eql(null)
-        expect(router._fromLocationPathRegexp("^$", "/foo"))
-         .to.eql(null)
-        expect(router._fromLocationPathRegexp("^$", "/foo/bar"))
-         .to.eql(null)
-      })
-
-      test("match error path", () => {
-        // expect:
-        expect(router._fromLocationPathRegexp("(.*)", ""))
-          .to.eql({ 0: "" })
-        expect(router._fromLocationPathRegexp("(.*)", "/"))
-          .to.eql({ 0: "/" })
-        expect(router._fromLocationPathRegexp("(.*)", "/foo"))
-          .to.eql({ 0: "/foo" })
-        expect(router._fromLocationPathRegexp("(.*)", "/foo/bar"))
-          .to.eql({ 0: "/foo/bar" })
-      })
-    })
-
-    //----------------------------------------------------------------------------------------------
-    // SUITE.
-    //----------------------------------------------------------------------------------------------
-
     suite("simple router", () => {
       let router
 
@@ -319,7 +216,7 @@
 
       setup(() => {
         // given:
-        router = fixture("SimpleRouter")
+        router = fixture("EmptyRouter")
       })
 
       test("fragment with path segments", () => {
@@ -340,6 +237,109 @@
           pathSegments: ["", "foo", "bar", "baz"],
           queryParams: { key: "val", flag: null }
         })
+      })
+    })
+
+    //----------------------------------------------------------------------------------------------
+    // SUITE.
+    //----------------------------------------------------------------------------------------------
+
+    suite("to and from location path", () => {
+      let router
+
+      setup(() => {
+        // given:
+        router = fixture("EmptyRouter")
+      })
+
+      test("to location path pattern", () => {
+        // expect:
+        expect(router._toLocationPath("/seg1", { key1: "val1" }))
+          .to.eql("/seg1?key1=val1")
+        expect(router._toLocationPath("/seg1", { key1: "val1", key2: "val2" }))
+          .to.eql("/seg1?key1=val1&key2=val2")
+        expect(router._toLocationPath("/seg1/seg2", { key1: "val1", key2: "val2" }))
+          .to.eql("/seg1/seg2?key1=val1&key2=val2")
+
+        // and:
+        expect(router._toLocationPath("/seg1/:key1", { key1: "val1", key2: "val2" }))
+          .to.eql("/seg1/val1?key2=val2")
+        expect(router._toLocationPath("/seg1/:key1/:key2", { key1: "val1", key2: "val2" }))
+          .to.eql("/seg1/val1/val2")
+      })
+
+      test("from location path pattern", () => {
+        // expect:
+        expect(router._fromLocationPath("/seg1", "/seg1?key1=val1"))
+          .to.eql({ key1: "val1" })
+        expect(router._fromLocationPath("/seg1", "/seg1?key1=val1&key2=val2"))
+          .to.eql({ key1: "val1", key2: "val2" })
+        expect(router._fromLocationPath("/seg1/seg2", "/seg1/seg2?key1=val1&key2=val2"))
+          .to.eql({ key1: "val1", key2: "val2" })
+
+        // and:
+        expect(router._fromLocationPath("/seg1/:key1", "/seg1/val1?key2=val2"))
+          .to.eql({ key1: "val1", key2: "val2" })
+        expect(router._fromLocationPath("/seg1/:key1/:key2", "/seg1/val1/val2"))
+          .to.eql({ key1: "val1", key2: "val2" })
+      })
+
+      test("to location path regexp", () => {
+        // expect:
+        expect(router._toLocationPathRegexp("/seg1", { key1: "val1" }))
+          .to.eql("/seg1?key1=val1")
+        expect(router._toLocationPathRegexp("/seg1", { key1: "val1", key2: "val2" }))
+          .to.eql("/seg1?key1=val1&key2=val2")
+        expect(router._toLocationPathRegexp("/seg1/seg2", { key1: "val1", key2: "val2" }))
+          .to.eql("/seg1/seg2?key1=val1&key2=val2")
+
+        // and:
+        expect(router._toLocationPathRegexp("/seg1/(.+)", { 0: "val1", key2: "val2" }))
+          .to.eql("/seg1/val1?key2=val2")
+        expect(router._toLocationPathRegexp("/seg1/(.+)/(.+)", { 0: "val1", 1: "val2" }))
+          .to.eql("/seg1/val1/val2")
+      })
+
+      test("from location path regexp", () => {
+        // expect:
+        expect(router._fromLocationPathRegexp("/seg1", "/seg1?key1=val1"))
+          .to.eql({ key1: "val1" })
+        expect(router._fromLocationPathRegexp("/seg1", "/seg1?key1=val1&key2=val2"))
+          .to.eql({ key1: "val1", key2: "val2" })
+        expect(router._fromLocationPathRegexp("/seg1/seg2", "/seg1/seg2?key1=val1&key2=val2"))
+          .to.eql({ key1: "val1", key2: "val2" })
+
+        // and:
+        expect(router._fromLocationPathRegexp("/seg1/(.+)", "/seg1/val1?key2=val2"))
+          .to.eql({ 0: "val1", key2: "val2" })
+        expect(router._fromLocationPathRegexp("/seg1/(.+)/(.+)", "/seg1/val1/val2"))
+          .to.eql({ 0: "val1", 1: "val2" })
+      })
+
+      test("match default path", () => {
+        // expect:
+        expect(router._fromLocationPathRegexp("^$", ""))
+         .to.eql({})
+
+        // and:
+        expect(router._fromLocationPathRegexp("^$", "/"))
+         .to.eql(null)
+        expect(router._fromLocationPathRegexp("^$", "/foo"))
+         .to.eql(null)
+        expect(router._fromLocationPathRegexp("^$", "/foo/bar"))
+         .to.eql(null)
+      })
+
+      test("match error path", () => {
+        // expect:
+        expect(router._fromLocationPathRegexp("(.*)", ""))
+          .to.eql({ 0: "" })
+        expect(router._fromLocationPathRegexp("(.*)", "/"))
+          .to.eql({ 0: "/" })
+        expect(router._fromLocationPathRegexp("(.*)", "/foo"))
+          .to.eql({ 0: "/foo" })
+        expect(router._fromLocationPathRegexp("(.*)", "/foo/bar"))
+          .to.eql({ 0: "/foo/bar" })
       })
     })
 
