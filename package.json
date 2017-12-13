@@ -1,5 +1,5 @@
 {
-  "name": "oo-routes",
+  "name": "oo-router",
   "description": "Declarative, self-describing routing",
   "version": "0.5.0",
   "author": "Benjamin Gudehus <benjamin.gudehus@canoo.com>",

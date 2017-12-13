@@ -1,17 +1,16 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../iron-selector/iron-selectable.html">
 
-<dom-module id="oo-routes">
+<dom-module id="oo-router">
 
   <script>
     // Declare in local function scope to avoid bleeding variables into global `window`.
     (function () {
-      // TODO(hastebrot): Rename class to OoRouter, element to <oo-router>.
-      class OoRoutes extends Polymer.mixinBehaviors(
+      class OoRouter extends Polymer.mixinBehaviors(
         [Polymer.IronSelectableBehavior], Polymer.Element) {
 
         static get is() {
-          return "oo-routes"
+          return "oo-router"
         }
 
         static get properties() {
@@ -276,7 +275,7 @@
         return value === ""
       }
 
-      window.customElements.define(OoRoutes.is, OoRoutes)
+      window.customElements.define(OoRouter.is, OoRouter)
 
     }())
   </script>

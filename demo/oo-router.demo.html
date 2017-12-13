@@ -4,14 +4,14 @@
 <link rel="import" href="../../polymer/lib/elements/dom-bind.html">
 <link rel="import" href="../../app-route/app-location.html">
 <link rel="import" href="../../iron-pages/iron-pages.html">
+<link rel="import" href="../oo-router.html">
 <link rel="import" href="../oo-route.html">
-<link rel="import" href="../oo-routes.html">
 
 <dom-bind>
   <template>
     <app-location route="{{route}}" use-hash-as-path></app-location>
 
-    <oo-routes
+    <oo-router
         route="{{route.path}}"
         attr-for-selected="name"
         selected="{{routeName}}"
@@ -26,7 +26,7 @@
 
       <oo-route name="default" use-regexp pattern="^$" map-query-to-params></oo-route>
       <oo-route name="error" use-regexp pattern="(.*)" map-query-to-params></oo-route>
-    </oo-routes>
+    </oo-router>
 
     <div>
       <a href="#/one">one</a>
@@ -53,10 +53,10 @@
     window.addEventListener("WebComponentsReady", () => {
       const domBind = document.querySelector("dom-bind")
       const location = document.querySelector("app-location")
-      const routes = document.querySelector("oo-routes")
+      const router = document.querySelector("oo-router")
 
-      window.routes = routes
-      window.goto = routes.toLocationPath.bind(routes)
+      window.router = router
+      window.goto = router.toLocationPath.bind(router)
 
       console.log("location.route", location.route)
 
@@ -65,10 +65,10 @@
         console.log("location.route", location.route)
       })
 
-      routes.addEventListener("selected-changed", () => {
-        console.log("routes.selected", routes.selected)
-        console.log("routes.route", routes.route)
-        console.log("routes.params", routes.params)
+      router.addEventListener("selected-changed", () => {
+        console.log("router.selected", router.selected)
+        console.log("router.route", router.route)
+        console.log("router.params", router.params)
         // console.log("---")
         // console.log("domBind.routeName", domBind.routeName)
         // console.log("domBind.routeParams", domBind.routeParams)
