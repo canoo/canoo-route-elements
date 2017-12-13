@@ -137,6 +137,32 @@
         expect(routes._fromLocationPathRegexp("/seg1/(.+)/(.+)", "/seg1/val1/val2"))
           .to.eql({ 0: "val1", 1: "val2" })
       })
+
+      test("match default path", () => {
+        // expect:
+        expect(routes._fromLocationPathRegexp("^$", ""))
+         .to.eql({})
+
+        // and:
+        expect(routes._fromLocationPathRegexp("^$", "/"))
+         .to.eql(null)
+        expect(routes._fromLocationPathRegexp("^$", "/foo"))
+         .to.eql(null)
+        expect(routes._fromLocationPathRegexp("^$", "/foo/bar"))
+         .to.eql(null)
+      })
+
+      test("match error path", () => {
+        // expect:
+        expect(routes._fromLocationPathRegexp("(.*)", ""))
+          .to.eql({ 0: "" })
+        expect(routes._fromLocationPathRegexp("(.*)", "/"))
+          .to.eql({ 0: "/" })
+        expect(routes._fromLocationPathRegexp("(.*)", "/foo"))
+          .to.eql({ 0: "/foo" })
+        expect(routes._fromLocationPathRegexp("(.*)", "/foo/bar"))
+          .to.eql({ 0: "/foo/bar" })
+      })
     })
 
     //----------------------------------------------------------------------------------------------

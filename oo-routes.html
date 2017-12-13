@@ -6,6 +6,7 @@
   <script>
     // Declare in local function scope to avoid bleeding variables into global `window`.
     (function () {
+      // TODO(hastebrot): Rename class to OoRouter, element to <oo-router>.
       class OoRoutes extends Polymer.mixinBehaviors(
         [Polymer.IronSelectableBehavior], Polymer.Element) {
 
@@ -15,13 +16,15 @@
 
         static get properties() {
           return {
+            // TODO(hastebrot): Rename property to locationPath.
             route: {
               type: String,
               notify: true,
               reflectToAttribute: true,
-              observer: "_onItemsChanged"
+              observer: "_onLocationPathChanged"
             },
 
+            // TODO(hastebrot): Replace property with routeName.
             selected: {
               type: Object,
               notify: true,
@@ -29,6 +32,7 @@
               value: null
             },
 
+            // TODO(hastebrot): Replace property with routeParams.
             params: {
               type: String,
               notify: true,
@@ -39,21 +43,28 @@
 
         ready() {
           super.ready()
-          this.addEventListener("iron-items-changed", this._onItemsChanged)
+          this.addEventListener("iron-items-changed", this._onRouteItemsChanged)
         }
 
-        _onItemsChanged() {
-          this._pathToRoute(this.route)
+        _onLocationPathChanged() {
+          this._pathToRoute(this.route, this.items)
         }
 
-        _pathToRoute(route) {
+        _onRouteItemsChanged() {
+          this._pathToRoute(this.route, this.items)
+        }
+
+        _pathToRoute(route, items) {
           let selectedIndex = null
           let selected = null
           let params = null
 
-          for (const itemIndex in this.items) {
-            const routeItem = this.items[itemIndex]
-            const routeParams = this._matchRoute(route, routeItem)
+          for (const itemIndex in items) {
+            const routeItem = items[itemIndex]
+            const { pattern, useRegexp, mapParamsToQuery } = routeItem
+            const routeParams = useRegexp ?
+              this._fromLocationPathRegexp(pattern, route, mapParamsToQuery) :
+              this._fromLocationPath(pattern, route, mapParamsToQuery)
             if (routeParams !== NO_MATCH) {
               selectedIndex = itemIndex
               selected = this._indexToValue(itemIndex) || null
@@ -121,20 +132,6 @@
 
         _toLocationPathRegexp(routePattern, routeParams, mapParamsToQuery=true) {
           return buildRoutePathRegexp(routePattern, routeParams, mapParamsToQuery)
-        }
-
-        _matchRoute(route, routeItem) {
-          const { path, queryParams } = this._parseLocationPath(route)
-
-          const params = routeItem.useRegexp
-            ? matchRoutePathRegexp(path, routeItem.pattern)
-            : matchRoutePathPattern(path, routeItem.pattern)
-          if (params === NO_MATCH) { return NO_MATCH }
-
-          if (routeItem.mapQueryToParams) {
-            Object.assign(params, queryParams)
-          }
-          return params
         }
 
         _parseLocationPath(locationPath) {
