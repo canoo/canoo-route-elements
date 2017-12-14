@@ -1,4 +1,4 @@
-# \<oo-routes\>
+# oo-routes
 
 [![Travis Build](https://img.shields.io/travis/oolymer/oo-routes.svg)](https://travis-ci.org/oolymer/oo-routes)
 [![MIT License](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
@@ -25,15 +25,15 @@ $ bower install --save PolymerElements/iron-pages
 ~~~
 
 ~~~html
+<link rel="import" href="../oo-routes/oo-router.html">
 <link rel="import" href="../oo-routes/oo-route.html">
-<link rel="import" href="../oo-routes/oo-routes.html">
 <link rel="import" href="../app-route/app-location.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
 
 <app-location route="{{route}}" use-hash-as-path></app-location>
 
-<oo-routes
-    route="{{route.path}}"
+<oo-router
+    route-path"{{route.path}}"
     attr-for-selected="name"
     selected="{{routeName}}"
     params="{{routeParams}}">
@@ -43,7 +43,7 @@ $ bower install --save PolymerElements/iron-pages
 
   <oo-route name="default" use-regexp pattern="^$"></oo-route>
   <oo-route name="error" use-regexp pattern="(.*)"></oo-route>
-</oo-routes>
+</oo-router>
 
 <iron-pages
     attr-for-selected="name"
@@ -60,30 +60,30 @@ $ bower install --save PolymerElements/iron-pages
 Simple routes.
 
 ~~~html
-<oo-routes route="/bar">
+<oo-router route="/bar">
   <oo-route pattern="/foo"></oo-route>
   <oo-route pattern="/bar"></oo-route>
-</oo-routes>
+</oo-router>
 ~~~
 
 Routes with regular expression patterns.
 
 ~~~html
-<oo-routes attr-for-selected="name" route="/baz/quux">
+<oo-router attr-for-selected="name" route-path="/baz/quux">
   <oo-route name="foo" use-regexp pattern="/foo"></oo-route>
   <oo-route name="bar" use-regexp pattern="/bar"></oo-route>
   <oo-route name="baz" use-regexp pattern="/baz/(.+)"></oo-route>
-</oo-routes>
+</oo-router>
 ~~~
 
 Routes with patterns.
 
 ~~~html
-<oo-routes attr-for-selected="name" route="/baz/quux">
+<oo-router attr-for-selected="name" route-path="/baz/quux">
   <oo-route name="foo" pattern="/foo"></oo-route>
   <oo-route name="bar" pattern="/bar"></oo-route>
   <oo-route name="baz" pattern="/baz/:path"></oo-route>
-</oo-routes>
+</oo-router>
 ~~~
 
 ## Patterns
