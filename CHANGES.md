@@ -1,5 +1,9 @@
 # CHANGES
 
+## 0.6.0 / 2017-12-14
+
+- (refactor) [breaking change] Rename element and properties #14
+
 ## 0.5.0 / 2017-12-13
 
 - (feature) Introduce toLocationPath() and fromLocationPath(). #10
