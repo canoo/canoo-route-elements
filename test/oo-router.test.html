@@ -20,7 +20,7 @@
 
 <test-fixture id="SimpleRouter">
   <template>
-    <oo-router route="/bar">
+    <oo-router route-path="/bar">
       <oo-route pattern="/foo"></oo-route>
       <oo-route pattern="/bar"></oo-route>
     </oo-router>
@@ -29,7 +29,7 @@
 
 <test-fixture id="RegexpRouter">
   <template>
-    <oo-router attr-for-selected="name" route="/baz/quux">
+    <oo-router attr-for-selected="name" route-path="/baz/quux">
       <oo-route name="foo" use-regexp pattern="/foo"></oo-route>
       <oo-route name="bar" use-regexp pattern="/bar"></oo-route>
       <oo-route name="baz" use-regexp pattern="/baz/(.+)"></oo-route>
@@ -39,7 +39,7 @@
 
 <test-fixture id="PatternRouter">
   <template>
-    <oo-router attr-for-selected="name" route="/baz/quux">
+    <oo-router attr-for-selected="name" route-path="/baz/quux">
       <oo-route name="foo" pattern="/foo"></oo-route>
       <oo-route name="bar" pattern="/bar"></oo-route>
       <oo-route name="baz" pattern="/baz/:path"></oo-route>
@@ -49,8 +49,9 @@
 
 <test-fixture id="QueryRouter">
   <template>
-    <oo-router attr-for-selected="name" route="/baz/quux?key=val&flag">
-      <oo-route name="baz" pattern="/baz/:path" map-query-to-params></oo-route>
+    <oo-router attr-for-selected="name" route-path="/baz/quux?key=val&flag">
+      <oo-route name="baz" pattern="/baz/:path"></oo-route>
+      <oo-route name="baaz" pattern="/baaz/:path" ignore-query-params></oo-route>
     </oo-router>
   </template>
 </test-fixture>
@@ -83,7 +84,7 @@
       })
 
       test("can select route", done => {
-        router.route = "/bar"
+        router.routePath = "/bar"
 
         flush(() => {
           // expect:
@@ -106,7 +107,7 @@
       })
 
       test("can select route", done => {
-        router.route = "/bar"
+        router.routePath = "/bar"
 
         flush(() => {
           // expect:
@@ -117,7 +118,7 @@
       })
 
       test("can select route pattern", done => {
-        router.route = "/baz/quux"
+        router.routePath = "/baz/quux"
 
         flush(() => {
           // expect:
@@ -128,7 +129,7 @@
       })
 
       test("no match", done => {
-        router.route = "/quux"
+        router.routePath = "/quux"
 
         flush(() => {
           // expect:
@@ -152,7 +153,7 @@
       })
 
       test("can select route", done => {
-        router.route = "/bar"
+        router.routePath = "/bar"
 
         flush(() => {
           // expect:
@@ -163,7 +164,7 @@
       })
 
       test("can select route pattern", done => {
-        router.route = "/baz/quux"
+        router.routePath = "/baz/quux"
 
         flush(() => {
           // expect:
@@ -174,7 +175,7 @@
       })
 
       test("no match", done => {
-        router.route = "/quux"
+        router.routePath = "/quux"
 
         flush(() => {
           // expect:

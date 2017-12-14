@@ -1,4 +1,4 @@
-# \<oo-router\>
+# oo-routes
 
 [![Travis Build](https://img.shields.io/travis/oolymer/oo-routes.svg)](https://travis-ci.org/oolymer/oo-routes)
 [![MIT License](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
@@ -33,7 +33,7 @@ $ bower install --save PolymerElements/iron-pages
 <app-location route="{{route}}" use-hash-as-path></app-location>
 
 <oo-router
-    route="{{route.path}}"
+    route-path"{{route.path}}"
     attr-for-selected="name"
     selected="{{routeName}}"
     params="{{routeParams}}">
@@ -69,7 +69,7 @@ Simple routes.
 Routes with regular expression patterns.
 
 ~~~html
-<oo-router attr-for-selected="name" route="/baz/quux">
+<oo-router attr-for-selected="name" route-path="/baz/quux">
   <oo-route name="foo" use-regexp pattern="/foo"></oo-route>
   <oo-route name="bar" use-regexp pattern="/bar"></oo-route>
   <oo-route name="baz" use-regexp pattern="/baz/(.+)"></oo-route>
@@ -79,7 +79,7 @@ Routes with regular expression patterns.
 Routes with patterns.
 
 ~~~html
-<oo-router attr-for-selected="name" route="/baz/quux">
+<oo-router attr-for-selected="name" route-path="/baz/quux">
   <oo-route name="foo" pattern="/foo"></oo-route>
   <oo-route name="bar" pattern="/bar"></oo-route>
   <oo-route name="baz" pattern="/baz/:path"></oo-route>

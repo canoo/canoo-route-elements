@@ -6,6 +6,10 @@
     // Declare in local function scope to avoid bleeding variables into global `window`.
     (function () {
 
+      /**
+       * @customElement
+       * @polymer
+       */
       class OoRoute extends Polymer.Element {
         static get is() {
           return "oo-route"
@@ -22,7 +26,7 @@
               value: false
             },
 
-            mapQueryToParams: {
+            ignoreQueryParams: {
               type: Boolean,
               value: false
             }

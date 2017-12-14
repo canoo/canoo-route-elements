@@ -6,6 +6,11 @@
   <script>
     // Declare in local function scope to avoid bleeding variables into global `window`.
     (function () {
+
+      /**
+       * @customElement
+       * @polymer
+       */
       class OoRouter extends Polymer.mixinBehaviors(
         [Polymer.IronSelectableBehavior], Polymer.Element) {
 
@@ -15,15 +20,13 @@
 
         static get properties() {
           return {
-            // TODO(hastebrot): Rename property to locationPath.
-            route: {
+            routePath: {
               type: String,
               notify: true,
               reflectToAttribute: true,
-              observer: "_onLocationPathChanged"
+              observer: "_onRoutePathChanged"
             },
 
-            // TODO(hastebrot): Replace property with routeName.
             selected: {
               type: Object,
               notify: true,
@@ -31,7 +34,6 @@
               value: null
             },
 
-            // TODO(hastebrot): Replace property with routeParams.
             params: {
               type: String,
               notify: true,
@@ -45,12 +47,12 @@
           this.addEventListener("iron-items-changed", this._onRouteItemsChanged)
         }
 
-        _onLocationPathChanged() {
-          this.fromLocationPath(this.route)
+        _onRoutePathChanged() {
+          this.fromLocationPath(this.routePath)
         }
 
         _onRouteItemsChanged() {
-          this.fromLocationPath(this.route)
+          this.fromLocationPath(this.routePath)
         }
 
         /**
@@ -64,10 +66,10 @@
 
           for (const itemIndex in this.items) {
             const routeItem = this.items[itemIndex]
-            const { pattern, useRegexp, mapParamsToQuery } = routeItem
+            const { pattern, useRegexp, ignoreQueryParams } = routeItem
             const routeParams = useRegexp ?
-              this._fromLocationPathRegexp(pattern, locationPath, mapParamsToQuery) :
-              this._fromLocationPath(pattern, locationPath, mapParamsToQuery)
+              this._fromLocationPathRegexp(pattern, locationPath, ignoreQueryParams) :
+              this._fromLocationPath(pattern, locationPath, ignoreQueryParams)
             if (routeParams !== NO_MATCH) {
               selectedIndex = itemIndex
               selected = this._indexToValue(itemIndex) || null
@@ -94,55 +96,55 @@
             const routeItem = this.items[itemIndex]
             const routeName = this._indexToValue(itemIndex)
             if (routeName === name) {
-              const { pattern, useRegexp, mapParamsToQuery } = routeItem
+              const { pattern, useRegexp, ignoreQueryParams } = routeItem
               if (pattern) {
                 locationPath = useRegexp ?
-                  this._toLocationPathRegexp(pattern, params) :
-                  this._toLocationPath(pattern, params)
+                  this._toLocationPathRegexp(pattern, params, ignoreQueryParams) :
+                  this._toLocationPath(pattern, params, ignoreQueryParams)
               }
               break
             }
           }
 
-          // TODO(hastebrot): when "name" matches no "routeItem" it will set locationPath to "".
+          // TODO(hastebrot): when "name" matches no "routeItem" it will set routePath to "".
           this.setProperties({
-            route: locationPath || "" // <- should something like "error".
+            routePath: locationPath || "" // <- should something like "error".
           })
         }
 
         /**
          * from location.route.path.
          */
-        _fromLocationPath(routePattern, locationPath, mapQueryToParams=true) {
+        _fromLocationPath(routePattern, locationPath, ignoreQueryParams=false) {
           const { path, queryParams } = this._parseLocationPath(locationPath)
 
           const routeParams = matchRoutePathPattern(path, routePattern)
           if (routeParams === NO_MATCH) { return NO_MATCH }
 
-          if (mapQueryToParams) {
+          if (!ignoreQueryParams) {
             Object.assign(routeParams, queryParams)
           }
           return routeParams
         }
 
-        _toLocationPath(routePattern, routeParams, mapParamsToQuery=true) {
-          return buildRoutePathPattern(routePattern, routeParams, mapParamsToQuery)
+        _toLocationPath(routePattern, routeParams, ignoreQueryParams=false) {
+          return buildRoutePathPattern(routePattern, routeParams, ignoreQueryParams)
         }
 
-        _fromLocationPathRegexp(routePattern, locationPath, mapQueryToParams=true) {
+        _fromLocationPathRegexp(routePattern, locationPath, ignoreQueryParams=false) {
           const { path, queryParams } = this._parseLocationPath(locationPath)
 
           const routeParams = matchRoutePathRegexp(path, routePattern)
           if (routeParams === NO_MATCH) { return NO_MATCH }
 
-          if (mapQueryToParams) {
+          if (!ignoreQueryParams) {
             Object.assign(routeParams, queryParams)
           }
           return routeParams
         }
 
-        _toLocationPathRegexp(routePattern, routeParams, mapParamsToQuery=true) {
-          return buildRoutePathRegexp(routePattern, routeParams, mapParamsToQuery)
+        _toLocationPathRegexp(routePattern, routeParams, ignoreQueryParams=false) {
+          return buildRoutePathRegexp(routePattern, routeParams, ignoreQueryParams)
         }
 
         _parseLocationPath(locationPath) {
@@ -171,7 +173,7 @@
         return NO_MATCH
       }
 
-      function buildRoutePathRegexp(pattern, params, withQueryParams=true) {
+      function buildRoutePathRegexp(pattern, params, ignoreQueryParams=false) {
         const regexp = new RegExp("(\\(.*?\\))", "g")
         const match = regexp.exec(pattern)
 
@@ -188,7 +190,7 @@
         }
 
         // Did not match.
-        return buildLocationPath(path, withQueryParams ? params : {})
+        return buildLocationPath(path, ignoreQueryParams ? {} : params)
       }
 
       function matchRoutePathPattern(path, pattern) {
@@ -221,7 +223,7 @@
         return params
       }
 
-      function buildRoutePathPattern(pattern, params, withQueryParams=true) {
+      function buildRoutePathPattern(pattern, params, ignoreQueryParams=false) {
         let path = pattern
 
         const queryParams = {}
@@ -235,7 +237,7 @@
           }
         }
 
-        return buildLocationPath(path, withQueryParams ? queryParams : {})
+        return buildLocationPath(path, ignoreQueryParams ? {} : queryParams)
       }
 
       function parseLocationPath(locationPath) {
