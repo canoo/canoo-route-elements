@@ -3177,12 +3177,12 @@
       "dev": true
     },
     "duplexify": {
-      "version": "3.5.1",
-      "resolved": "https://registry.npmjs.org/duplexify/-/duplexify-3.5.1.tgz",
-      "integrity": "sha512-j5goxHTwVED1Fpe5hh3q9R93Kip0Bg2KVAt4f8CEYM3UEwYcPSvWbXaUQOzdX/HtiNomipv+gU7ASQPDbV7pGQ==",
+      "version": "3.5.3",
+      "resolved": "https://registry.npmjs.org/duplexify/-/duplexify-3.5.3.tgz",
+      "integrity": "sha512-g8ID9OroF9hKt2POf8YLayy+9594PzmM3scI00/uBXocX3TWNgoB67hjzkFe9ITAbQOne/lLdBxHXvYUM4ZgGA==",
       "dev": true,
       "requires": {
-        "end-of-stream": "1.4.0",
+        "end-of-stream": "1.4.1",
         "inherits": "2.0.3",
         "readable-stream": "2.3.3",
         "stream-shift": "1.0.0"
@@ -3247,9 +3247,9 @@
       "dev": true
     },
     "end-of-stream": {
-      "version": "1.4.0",
-      "resolved": "https://registry.npmjs.org/end-of-stream/-/end-of-stream-1.4.0.tgz",
-      "integrity": "sha1-epDYM+/abPpurA9JSduw+tOmMgY=",
+      "version": "1.4.1",
+      "resolved": "https://registry.npmjs.org/end-of-stream/-/end-of-stream-1.4.1.tgz",
+      "integrity": "sha512-1MkrZNvWTKCaigbn+W15elq2BB/L22nqrSY5DKlo3X6+vclJm8Bb5djXJBmEX6fS3+zCh/F4VBK5Z2KxJt4s2Q==",
       "dev": true,
       "requires": {
         "once": "1.4.0"
@@ -5620,7 +5620,7 @@
         "is-deflate": "1.0.0",
         "is-gzip": "1.0.0",
         "peek-stream": "1.1.2",
-        "pumpify": "1.3.5",
+        "pumpify": "1.3.6",
         "through2": "2.0.3"
       }
     },
@@ -7935,7 +7935,7 @@
       "integrity": "sha1-l+t2NlvP2MieKH9VyLadTD6bzFI=",
       "dev": true,
       "requires": {
-        "duplexify": "3.5.1",
+        "duplexify": "3.5.3",
         "through2": "2.0.3"
       }
     },
@@ -8885,24 +8885,24 @@
       "dev": true
     },
     "pump": {
-      "version": "1.0.3",
-      "resolved": "https://registry.npmjs.org/pump/-/pump-1.0.3.tgz",
-      "integrity": "sha512-8k0JupWme55+9tCVE+FS5ULT3K6AbgqrGa58lTT49RpyfwwcGedHqaC5LlQNdEAumn/wFsu6aPwkuPMioy8kqw==",
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/pump/-/pump-2.0.0.tgz",
+      "integrity": "sha512-6MYypjOvtiXhBSTOD0Zs5eNjCGfnqi5mPsCsW+dgKTxrZzQMZQNpBo3XRkLx7id753f3EeyHLBqzqqUymIolgw==",
       "dev": true,
       "requires": {
-        "end-of-stream": "1.4.0",
+        "end-of-stream": "1.4.1",
         "once": "1.4.0"
       }
     },
     "pumpify": {
-      "version": "1.3.5",
-      "resolved": "https://registry.npmjs.org/pumpify/-/pumpify-1.3.5.tgz",
-      "integrity": "sha1-G2ccYZlAq8rqwK0OOjwWS+dgmTs=",
+      "version": "1.3.6",
+      "resolved": "https://registry.npmjs.org/pumpify/-/pumpify-1.3.6.tgz",
+      "integrity": "sha512-BurGAcvezsINL5US9T9wGHHcLNrG6MCp//ECtxron3vcR+Rfx5Anqq7HbZXNJvFQli8FGVsWCAvywEJFV5Hx/Q==",
       "dev": true,
       "requires": {
-        "duplexify": "3.5.1",
+        "duplexify": "3.5.3",
         "inherits": "2.0.3",
-        "pump": "1.0.3"
+        "pump": "2.0.0"
       }
     },
     "punycode": {
@@ -9586,7 +9586,7 @@
           "dev": true,
           "requires": {
             "bl": "1.2.1",
-            "end-of-stream": "1.4.0",
+            "end-of-stream": "1.4.1",
             "readable-stream": "2.3.3",
             "xtend": "4.0.1"
           }
@@ -10489,6 +10489,16 @@
           "requires": {
             "minimist": "0.0.8"
           }
+        },
+        "pump": {
+          "version": "1.0.3",
+          "resolved": "https://registry.npmjs.org/pump/-/pump-1.0.3.tgz",
+          "integrity": "sha512-8k0JupWme55+9tCVE+FS5ULT3K6AbgqrGa58lTT49RpyfwwcGedHqaC5LlQNdEAumn/wFsu6aPwkuPMioy8kqw==",
+          "dev": true,
+          "requires": {
+            "end-of-stream": "1.4.1",
+            "once": "1.4.0"
+          }
         }
       }
     },
@@ -10499,7 +10509,7 @@
       "dev": true,
       "requires": {
         "bl": "1.2.1",
-        "end-of-stream": "1.4.0",
+        "end-of-stream": "1.4.1",
         "readable-stream": "2.3.3",
         "xtend": "4.0.1"
       }
@@ -10538,7 +10548,7 @@
       "integrity": "sha1-Bk5Im0tb9gumpre8fy9cJ07Pgmk=",
       "dev": true,
       "requires": {
-        "duplexify": "3.5.1",
+        "duplexify": "3.5.3",
         "fork-stream": "0.0.4",
         "merge-stream": "1.0.1",
         "through2": "2.0.3"
@@ -10999,7 +11009,7 @@
       "integrity": "sha1-vm/zJwy1Xf19MGNkDegfJddTIjk=",
       "dev": true,
       "requires": {
-        "duplexify": "3.5.1",
+        "duplexify": "3.5.3",
         "glob-stream": "5.3.5",
         "graceful-fs": "4.1.11",
         "gulp-sourcemaps": "1.6.0",
