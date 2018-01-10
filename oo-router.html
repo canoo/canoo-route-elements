@@ -206,7 +206,7 @@
           }
 
           // Is wildcard parameter.
-          if (patternElement.startsWith(T_COLON)) {
+          if (pathElement && patternElement.startsWith(T_COLON)) {
             const param = patternElement.slice(1)
             params[param] = pathElement
             continue
