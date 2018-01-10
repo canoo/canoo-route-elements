@@ -1,8 +1,12 @@
 # CHANGES
 
+## [unreleased]
+
+- (fix) Check all params present for wildcard pattern segments. #17
+
 ## 0.6.1 / 2018-01-10
 
-- (fix) Use wildcard pattern segment only when path segment present.
+- (fix) Use wildcard pattern segment only when path segment present. #16
 
 ## 0.6.0 / 2017-12-14
 
