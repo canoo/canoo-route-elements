@@ -21,12 +21,13 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - sleep 3
   - npm install --global bower
+  - npm install --global yarn
   - npm install --global paladox/wct-local#patch-3
-  - npm install
+  - yarn install
   - bower install --force-latest
 
 # run npm build.
 script:
-  - npm run build
-  - npm run lint
-  - npm run test
+  - yarn run build
+  - yarn run lint
+  - yarn run test
