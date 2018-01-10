@@ -58,9 +58,9 @@
 
 <test-fixture id="MultiPatternRouter">
   <template>
-    <oo-router attr-for-selected="name" route-path="/foo/bar">
+    <oo-router attr-for-selected="name">
       <oo-route name="foo" pattern="/foo/:seg1/:seg2"></oo-route>
-      <oo-route name="foo" pattern="/foo/:path"></oo-route>
+      <oo-route name="foo" pattern="/foo/:seg1"></oo-route>
     </oo-router>
   </template>
 </test-fixture>
@@ -235,7 +235,7 @@
         flush(() => {
           // expect:
           expect(router.selected).to.eql("foo")
-          expect(router.params).to.eql({ path: "bar" })
+          expect(router.params).to.eql({ seg1: "bar" })
           done()
         })
       })
@@ -247,6 +247,26 @@
           // expect:
           expect(router.selected).to.eql("foo")
           expect(router.params).to.eql({ seg1: "bar", seg2: "baz" })
+          done()
+        })
+      })
+
+      test("can navigate route path", done => {
+        flush(() => {
+          router.toRoutePath("foo", { seg1: "bar" })
+
+          // expect:
+          expect(router.routePath).to.eql("/foo/bar")
+          done()
+        })
+      })
+
+      test("can navigate other route path", done => {
+        flush(() => {
+          router.toRoutePath("foo", { seg1: "bar", seg2: "baz" })
+
+          // expect:
+          expect(router.routePath).to.eql("/foo/bar/baz")
           done()
         })
       })

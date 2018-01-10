@@ -22,6 +22,7 @@
           return {
             routePath: {
               type: String,
+              value: () => "",
               notify: true,
               reflectToAttribute: true,
               observer: "_onRoutePathChanged"
@@ -29,15 +30,15 @@
 
             selected: {
               type: Object,
+              value: () => null,
               notify: true,
-              reflectToAttribute: true,
-              value: null
+              reflectToAttribute: true
             },
 
             params: {
-              type: String,
-              notify: true,
-              value: () => { return {} }
+              type: Object,
+              value: () => { return {} },
+              notify: true
             }
           }
         }
@@ -101,6 +102,10 @@
                 routePath = useRegexp ?
                   this._toLocationPathRegexp(pattern, params, ignoreQueryParams) :
                   this._toLocationPath(pattern, params, ignoreQueryParams)
+
+                if (routePath === NO_MATCH) {
+                  continue
+                }
               }
               break
             }
@@ -221,8 +226,17 @@
       }
 
       function buildRoutePathPattern(pattern, params, ignoreQueryParams=false) {
-        let path = pattern
+        // check for unused patterns in path, if applicable return NO_MATCH.
+        const patternElements = pattern.split(T_SLASH)
+        for (const patternElement of patternElements) {
+          if (patternElement.startsWith(T_COLON)) {
+            if (!params[patternElement.slice(1)]) {
+              return NO_MATCH
+            }
+          }
+        }
 
+        let path = pattern
         const queryParams = {}
         for (const [key, value] of Object.entries(params)) {
           const patternKey = T_COLON + key
