@@ -1,5 +1,9 @@
 # CHANGES
 
+## 0.6.1 / 2018-01-10
+
+- (fix) Use wildcard pattern segment only when path segment present.
+
 ## 0.6.0 / 2017-12-14
 
 - (refactor) [breaking change] Rename element and properties #14

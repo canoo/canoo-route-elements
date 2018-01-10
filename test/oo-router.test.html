@@ -56,6 +56,15 @@
   </template>
 </test-fixture>
 
+<test-fixture id="MultiPatternRouter">
+  <template>
+    <oo-router attr-for-selected="name" route-path="/foo/bar">
+      <oo-route name="foo" pattern="/foo/:seg1/:seg2"></oo-route>
+      <oo-route name="foo" pattern="/foo/:path"></oo-route>
+    </oo-router>
+  </template>
+</test-fixture>
+
 <!-- ------------------------------------------------------------------------------------------ -->
 <!-- FEATURES.
 <!-- ------------------------------------------------------------------------------------------ -->
@@ -203,6 +212,41 @@
           // expect:
           expect(router.selected).to.eql("baz")
           expect(router.params).to.eql({ path: "quux", key: "val", flag: null })
+          done()
+        })
+      })
+    })
+
+    //----------------------------------------------------------------------------------------------
+    // SUITE.
+    //----------------------------------------------------------------------------------------------
+
+    suite("multi pattern router", () => {
+      let router
+
+      setup(() => {
+        // given:
+        router = fixture("MultiPatternRouter")
+      })
+
+      test("can select route", done => {
+        router.routePath = "/foo/bar"
+
+        flush(() => {
+          // expect:
+          expect(router.selected).to.eql("foo")
+          expect(router.params).to.eql({ path: "bar" })
+          done()
+        })
+      })
+
+      test("can select other route", done => {
+        router.routePath = "/foo/bar/baz"
+
+        flush(() => {
+          // expect:
+          expect(router.selected).to.eql("foo")
+          expect(router.params).to.eql({ seg1: "bar", seg2: "baz" })
           done()
         })
       })
