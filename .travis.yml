@@ -22,7 +22,6 @@ before_script:
   - sleep 3
   - npm install --global bower
   - npm install --global yarn
-  - npm install --global paladox/wct-local#patch-3
   - yarn install
   - bower install --force-latest
 
