@@ -1,0 +1,20 @@
+{
+  "plugins": {
+    "local": {
+      "skipSeleniumInstall": true,
+      "disabled": false,
+      "browsers": [
+        "chrome",
+        "firefox"
+      ],
+      "browsersOptions": {
+        "chrome": [
+          "start-maximized",
+          "headless",
+          "disable-gpu",
+          "no-sandbox"
+        ]
+      }
+    }
+  }
+}

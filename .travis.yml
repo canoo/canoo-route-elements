@@ -21,13 +21,12 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - sleep 3
   - npm install --global bower
-  - npm install
+  - npm install --global yarn
+  - yarn install
   - bower install --force-latest
-  - npm update
-  - bower update --force-latest
 
 # run npm build.
 script:
-  - npm run build
-  - npm run lint
-  - npm run test
+  - yarn run build
+  - yarn run lint
+  - yarn run test
