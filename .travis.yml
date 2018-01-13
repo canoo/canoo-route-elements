@@ -22,7 +22,6 @@ before_script:
   - sleep 3
   - npm install --global bower
   - npm install
-  - npm shrinkwrap
   - bower install --force-latest
 
 # run npm build.

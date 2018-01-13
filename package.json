@@ -31,7 +31,7 @@
     "eslint-plugin-standard": "3.0.1",
     "npm-run-all": "4.1.2",
     "polymer-cli": "1.5.7",
-    "wct-local": "paladox/wct-local#patch-3",
-    "web-component-tester": "6.4.2"
+    "wct-local": "2.1.0",
+    "web-component-tester": "6.4.3"
   }
 }
