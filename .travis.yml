@@ -14,6 +14,9 @@ addons:
   chrome: stable
   firefox: latest
   sauce_connect: false
+  apt:
+    packages:
+      - oracle-java8-set-default
 
 # run npm and bower install.
 before_script:
