@@ -3,7 +3,7 @@ os: linux
 dist: trusty
 
 # run in container.
-sudo: false
+sudo: required
 
 # use nodejs environment.
 language: node_js
