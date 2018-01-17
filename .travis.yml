@@ -2,8 +2,8 @@
 os: linux
 dist: trusty
 
-# run in container.
-sudo: false
+# run not in container (required for chrome).
+sudo: required
 
 # use nodejs environment.
 language: node_js
@@ -14,9 +14,6 @@ addons:
   chrome: stable
   firefox: latest
   sauce_connect: false
-  apt:
-    packages:
-      - oracle-java8-set-default
 
 # run npm and bower install.
 before_script:
