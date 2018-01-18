@@ -1,5 +1,9 @@
 # CHANGES
 
+## [unreleased]
+
+- (fix) Initial routePath property causes problems on initial page load. #20
+
 ## 0.6.2 / 2018-01-10
 
 - (fix) Check all params present for wildcard pattern segments. #17
