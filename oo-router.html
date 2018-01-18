@@ -22,7 +22,6 @@
           return {
             routePath: {
               type: String,
-              value: () => "",
               notify: true,
               reflectToAttribute: true,
               observer: "_onRoutePathChanged"
@@ -253,7 +252,7 @@
 
       function parseLocationPath(locationPath) {
         // path and query.
-        const [path, pathRest] = locationPath.split(T_QUESTION_MARK, 2)
+        const [path, pathRest] = (locationPath || "").split(T_QUESTION_MARK, 2)
         const query = pathRest || ""
 
         // path segments.
