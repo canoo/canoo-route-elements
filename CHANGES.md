@@ -1,5 +1,9 @@
 # CHANGES
 
+## [unreleased]
+
+- (chore) Update Node and Bower dependencies. #21
+
 ## 0.6.3 / 2018-01-18
 
 - (fix) Initial routePath property causes problems on initial page load. #20
