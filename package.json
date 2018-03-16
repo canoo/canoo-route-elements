@@ -5,32 +5,38 @@
   "author": "Benjamin Gudehus <benjamin.gudehus@canoo.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hastebrot/canoo-route-elements.git"
+    "url": "https://github.com/oolymer/oo-routes.git"
   },
   "license": "MIT",
   "private": true,
+  "devDependencies": {
+    "bower": "1.8.2",
+    "browser-sync": "2.23.6",
+    "eslint": "4.18.2",
+    "eslint-config-standard": "11.0.0",
+    "eslint-plugin-import": "2.9.0",
+    "eslint-plugin-node": "6.0.1",
+    "eslint-plugin-promise": "3.7.0",
+    "eslint-plugin-standard": "3.0.1",
+    "npm-delay": "1.0.4",
+    "npm-run-all": "4.1.2",
+    "polymer-cli": "1.6.0",
+    "web-component-tester": "6.5.0"
+  },
   "scripts": {
-    "browser": "./node_modules/.bin/npm-run-all --parallel serve watch",
+    "browser": "./node_modules/.bin/npm-run-all --parallel serve browser:after",
+    "browser:after": "./node_modules/.bin/npm-run-all --serial util:delay serve:watch",
     "build": "./node_modules/.bin/polymer build",
     "build:docs": "./node_modules/.bin/polymer analyze > analysis.json",
     "lint": "npm run lint:polymer",
     "lint:js": "./node_modules/.bin/eslint . --ext js,html --ignore-path .gitignore",
     "lint:polymer": "./node_modules/.bin/polymer lint",
-    "serve": "./node_modules/.bin/polymer serve --port 9090",
-    "test": "./node_modules/.bin/polymer test --local firefox",
-    "watch": "./node_modules/.bin/browser-sync start --port 3000 --proxy 'localhost:9090' --no-ui --files '*.html, demo/**/*.html, test/**/*.html' --startPath \"/components/$npm_package_name/\""
-  },
-  "devDependencies": {
-    "bower": "1.8.2",
-    "browser-sync": "2.18.13",
-    "eslint": "4.10.0",
-    "eslint-config-standard": "10.2.1",
-    "eslint-plugin-import": "2.8.0",
-    "eslint-plugin-node": "5.2.1",
-    "eslint-plugin-promise": "3.6.0",
-    "eslint-plugin-standard": "3.0.1",
-    "npm-run-all": "4.1.2",
-    "polymer-cli": "1.5.7",
-    "web-component-tester": "6.4.1"
+    "serve": "./node_modules/.bin/polymer serve --port 8000",
+    "serve:build": "./node_modules/.bin/polymer serve --port 8200 build/default",
+    "serve:watch": "./node_modules/.bin/browser-sync start --port 8100 --proxy 'localhost:8000' --no-ui --files '*.html, demo/**/*.html, src/**/*.html, test/**/*.html' --startPath \"/components/$npm_package_name/\"",
+    "test": "./node_modules/.bin/polymer test --local chrome,firefox --config-file wct.conf.json",
+    "test:chrome": "./node_modules/.bin/polymer test --local chrome",
+    "test:firefox": "./node_modules/.bin/polymer test --local firefox",
+    "util:delay": "node ./node_modules/.bin/npm-delay 100"
   }
 }
