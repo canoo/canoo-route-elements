@@ -1,12 +1,13 @@
 # build files.
 build/
 
-# project files.
-.idea/
-
 # dependencies.
 bower_components/
 node_modules/
 
-# apple macos.
+# project files.
+.idea/
+
+# utility files.
 *.DS_Store
+yarn-error.log
