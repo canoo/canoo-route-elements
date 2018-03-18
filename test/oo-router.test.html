@@ -61,6 +61,23 @@
   </template>
 </test-fixture>
 
+<test-fixture id="ComplexPatternRouter">
+  <template>
+    <oo-router attr-for-selected="name">
+      <oo-route name="query/ext" pattern="/query/ext/:a1/:c1/:c2"></oo-route>
+      <oo-route name="query/ext" pattern="/query/ext/:a1/:c1"></oo-route>
+      <oo-route name="query/ext" pattern="/query/ext/:a1"></oo-route>
+
+      <oo-route name="query" pattern="/query/:a1/:b1/:b2"></oo-route>
+      <oo-route name="query" pattern="/query/:a1/:b1"></oo-route>
+      <oo-route name="query" pattern="/query/:a1"></oo-route>
+
+      <oo-route name="default" use-regexp pattern="^$"></oo-route>
+      <oo-route name="error" use-regexp pattern="(.+)"></oo-route>
+    </oo-router>
+  </template>
+</test-fixture>
+
 <!-- FEATURES. -->
 
 <script>
@@ -264,6 +281,73 @@
           done()
         })
       })
+    })
+
+    //----------------------------------------------------------------------------------------------
+    // SUITE.
+    //----------------------------------------------------------------------------------------------
+
+    suite.only("complex pattern router", () => {
+      let router
+
+      setup(() => {
+        // given:
+        router = fixture("ComplexPatternRouter")
+      })
+
+      test("can select error route", done => {
+        router.routePath = "error"
+
+        flush(() => {
+          // expect:
+          expect(router.selected).to.eql("error")
+          expect(router.params).to.eql({ 0: "error" })
+          done()
+        })
+      })
+
+      test("can select query route", done => {
+        router.routePath = "/query/foo/bar"
+
+        flush(() => {
+          // expect:
+          expect(router.selected).to.eql("query")
+          expect(router.params).to.eql({ a1: "foo", b1: "bar" })
+          done()
+        })
+      })
+
+      test("can select query/ext route", done => {
+        router.routePath = "/query/ext/foo/bar"
+
+        flush(() => {
+          // expect:
+          expect(router.selected).to.eql("query/ext")
+          expect(router.params).to.eql({ a1: "foo", c1: "bar" })
+          done()
+        })
+      })
+
+      test("can navigate query route path", done => {
+        flush(() => {
+          router.toRoutePath("query/ext", { a1: "foo", c1: "bar" })
+
+          // expect:
+          expect(router.routePath).to.eql("/query/ext/foo/bar")
+          done()
+        })
+      })
+
+      test("can navigate query route path", done => {
+        flush(() => {
+          router.toRoutePath("query", { a1: "foo", b1: "bar" })
+
+          // expect:
+          expect(router.routePath).to.eql("/query/foo/bar")
+          done()
+        })
+      })
+
     })
 
     //----------------------------------------------------------------------------------------------
