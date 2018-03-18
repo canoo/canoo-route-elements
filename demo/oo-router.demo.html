@@ -8,6 +8,7 @@
 <link rel="import" href="../oo-route.html">
 
 <dom-bind>
+
   <template>
     <app-location route="{{route}}" use-hash-as-path></app-location>
 
@@ -41,18 +42,16 @@
       <div name="two">two</div>
       <div name="three">three</div>
     </iron-pages>
-
   </template>
 
   <script>
-
     window.addEventListener("WebComponentsReady", () => {
       const domBind = document.querySelector("dom-bind")
       const location = document.querySelector("app-location")
       const router = document.querySelector("oo-router")
 
       window.router = router
-      window.goto = router.toLocationPath.bind(router)
+      window.goto = router.toRoutePath.bind(router)
 
       console.log("location.route", location.route)
 
@@ -70,6 +69,6 @@
         // console.log("domBind.routeParams", domBind.routeParams)
       })
     })
-
   </script>
+
 </dom-bind>
