@@ -34,9 +34,9 @@
     "serve": "./node_modules/.bin/polymer serve --port 8000",
     "serve:build": "./node_modules/.bin/polymer serve --port 8200 build/default",
     "serve:watch": "./node_modules/.bin/browser-sync start --port 8100 --proxy 'localhost:8000' --no-ui --files '*.html, demo/**/*.html, src/**/*.html, test/**/*.html' --startPath \"/components/$npm_package_name/\"",
-    "test": "./node_modules/.bin/polymer test --local chrome,firefox --config-file wct.conf.json",
-    "test:chrome": "./node_modules/.bin/polymer test --local chrome",
-    "test:firefox": "./node_modules/.bin/polymer test --local firefox",
+    "test": "./node_modules/.bin/wct --local chrome --local firefox --configFile 'wct-headless.conf.json'",
+    "test:chrome": "./node_modules/.bin/polymer test --local chrome --persistent --skip-selenium-install",
+    "test:firefox": "./node_modules/.bin/polymer test --local firefox --persistent --skip-selenium-install",
     "util:delay": "node ./node_modules/.bin/npm-delay 100"
   }
 }

@@ -1,6 +1,6 @@
 # oo-routes
 
-Polymer elements for declarative and self-describing routing.
+> Polymer elements for declarative and self-describing routing.
 
 [![Travis Build](https://img.shields.io/travis/oolymer/oo-routes/master.svg)](https://travis-ci.org/oolymer/oo-routes)
 [![MIT License](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
@@ -14,7 +14,7 @@ Polymer elements for declarative and self-describing routing.
 - [Usage](#usage)
 - [Examples](#examples)
 - [Patterns](#patterns)
-- [Semantic Versions](#semantic-versions)
+- [Contribute](#contribute)
 
 <!-- /TOC -->
 
@@ -90,21 +90,28 @@ Routes with patterns.
 
 ## Patterns
 
->Every HTTP URL conforms to the syntax of a generic URI. A generic URI is of the form:
->
->~~~
->scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
->~~~
+Simple routes.
 
+~~~html
+<oo-route name="foo" pattern="/foo"></oo-route>
+<oo-route name="bar" pattern="/bar"></oo-route>
+~~~
 
-Patterns | Route | Matched Route | Matched Params
----------|-------|---------------|----------------
-`<oo-route name="foo" pattern="/foo">` <br> `<oo-route name="bar" pattern="/bar">` |  `{ path: "/foo" }` | foo | {}
-`{ foo: "/foo", bar: "/bar" }` | `{ path: "/foo" }` | foo | {}
-`{ foo: "/foo", bar: "/bar" }` | `{ path: "/bar" }` | bar | {}
-`{ foo: "/foo", bar: "/bar" }` | `{ path: "/baz" }` | *none* | {}
+Route | Matched Route | Matched Params
+------|---------------|----------------
+`{ path: "/foo" }` | `foo` | `{}`
+`{ path: "/bar" }` | `bar` | `{}`
+`{ path: "/baz" }` | *none* | `{}`
 
-## Semantic Versions
+Generic URI form.
+
+~~~
+scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
+~~~
+
+## Contribute
+
+Semantic versions.
 
 - Version number format `MAJOR.MINOR.PATCH`, e.g. "1.5.3".
 - Increase MAJOR for breaking changes.
