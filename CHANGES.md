@@ -3,6 +3,7 @@
 ## [unreleased]
 
 - (chore) Update Node and Bower dependencies. #21
+- (doc) Readme: Improve "patterns" section. #22
 
 ## 0.6.3 / 2018-01-18
 
